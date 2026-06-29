@@ -8,7 +8,8 @@ import {
   NoticeItem, 
   GallerySlide,
   Moderator,
-  AdminPermissions
+  AdminPermissions,
+  TeacherQuote
 } from '../types';
 import { 
   LayoutDashboard, 
@@ -62,6 +63,8 @@ interface AdminDashboardProps {
   setGallerySubheadline: (s: string) => void;
   galleryDescription: string;
   setGalleryDescription: (s: string) => void;
+  teacherQuotes: TeacherQuote[];
+  setTeacherQuotes: (quotes: TeacherQuote[]) => void;
 }
 
 export default function AdminDashboard({
@@ -85,7 +88,9 @@ export default function AdminDashboard({
   gallerySubheadline,
   setGallerySubheadline,
   galleryDescription,
-  setGalleryDescription
+  setGalleryDescription,
+  teacherQuotes,
+  setTeacherQuotes
 }: AdminDashboardProps) {
   // Login State
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -101,7 +106,7 @@ export default function AdminDashboard({
   } | null>(null);
 
   // Dashboard Sub-Tabs State
-  const [activeSubTab, setActiveSubTab] = useState<'overview' | 'teachers' | 'notices' | 'gallery' | 'members' | 'alumni' | 'events' | 'registrations' | 'inbox' | 'settings' | 'moderators'>('overview');
+  const [activeSubTab, setActiveSubTab] = useState<'overview' | 'teachers' | 'quotes' | 'notices' | 'gallery' | 'members' | 'alumni' | 'events' | 'registrations' | 'inbox' | 'settings' | 'moderators'>('overview');
 
   // Unified Success/Save States
   const [saveSuccess, setSaveSuccess] = useState(false);
@@ -201,6 +206,14 @@ export default function AdminDashboard({
   const [tEmail, setTEmail] = useState('');
   const [tResearchInterest, setTResearchInterest] = useState('');
   const [tImage, setTImage] = useState('');
+
+  // --- 1b. Teacher Quotes Editor States ---
+  const [editingQuoteId, setEditingQuoteId] = useState<string | null>(null);
+  const [qName, setQName] = useState('');
+  const [qDesignation, setQDesignation] = useState('');
+  const [qDepartment, setQDepartment] = useState('রসায়ন বিভাগ, রাজশাহী কলেজ');
+  const [qQuote, setQQuote] = useState('');
+  const [qImage, setQImage] = useState('');
 
   // --- 2. Notices Editor States ---
   const [editingNoticeId, setEditingNoticeId] = useState<string | null>(null);
@@ -479,6 +492,54 @@ export default function AdminDashboard({
 
   const handleDeleteTeacher = (id: string) => {
     setTeachers(teachers.filter(t => t.id !== id));
+  };
+
+  // 1b. Teacher Quotes CRUD Handlers
+  const handleSaveQuote = (e: FormEvent) => {
+    e.preventDefault();
+    if (!qName || !qQuote) return;
+
+    if (editingQuoteId) {
+      setTeacherQuotes(
+        teacherQuotes.map(q => q.id === editingQuoteId ? {
+          ...q,
+          name: qName,
+          designation: qDesignation,
+          department: qDepartment || 'রসায়ন বিভাগ, রাজশাহী কলেজ',
+          quote: qQuote,
+          image: qImage || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'
+        } : q)
+      );
+      setEditingQuoteId(null);
+    } else {
+      const newQuote: TeacherQuote = {
+        id: `quote-${Date.now()}`,
+        name: qName,
+        designation: qDesignation,
+        department: qDepartment || 'রসায়ন বিভাগ, রাজশাহী কলেজ',
+        quote: qQuote,
+        image: qImage || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'
+      };
+      setTeacherQuotes([newQuote, ...teacherQuotes]);
+    }
+
+    // Reset Form
+    setQName(''); setQDesignation(''); setQDepartment('রসায়ন বিভাগ, রাজশাহী কলেজ'); setQQuote(''); setQImage('');
+    setSaveSuccess(true);
+    setTimeout(() => setSaveSuccess(false), 2500);
+  };
+
+  const startEditQuote = (q: TeacherQuote) => {
+    setEditingQuoteId(q.id);
+    setQName(q.name);
+    setQDesignation(q.designation);
+    setQDepartment(q.department);
+    setQQuote(q.quote);
+    setQImage(q.image);
+  };
+
+  const handleDeleteQuote = (id: string) => {
+    setTeacherQuotes(teacherQuotes.filter(q => q.id !== id));
   };
 
   // 2. Notices Save/Submit
@@ -965,6 +1026,27 @@ export default function AdminDashboard({
                 </button>
               )}
 
+              {hasPermission('teachers') && (
+                <button
+                  onClick={() => setActiveSubTab('quotes')}
+                  className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl transition-all cursor-pointer ${
+                    activeSubTab === 'quotes'
+                      ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
+                      : 'hover:bg-slate-900 hover:text-white'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <BookOpen className="w-4 h-4" />
+                    <span>Teachers' Opinions (মতামত)</span>
+                  </div>
+                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                    activeSubTab === 'quotes' ? 'bg-slate-950 text-amber-400' : 'bg-slate-800 text-slate-400'
+                  }`}>
+                    {teacherQuotes.length}
+                  </span>
+                </button>
+              )}
+
               {hasPermission('notices') && (
                 <button
                   onClick={() => setActiveSubTab('notices')}
@@ -1405,6 +1487,127 @@ export default function AdminDashboard({
                         </button>
                         <button 
                           onClick={() => handleDeleteTeacher(t.id)} 
+                          className="p-1.5 bg-rose-950/40 hover:bg-rose-900/50 text-rose-400 rounded-lg transition-colors cursor-pointer"
+                          title="মুছে ফেলুন"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Tab 2b: Teacher Quotes Editor */}
+          {activeSubTab === 'quotes' && (
+            <div className="space-y-6 animate-in fade-in duration-200">
+              <div className="border-b border-slate-800 pb-3 flex justify-between items-center">
+                <div>
+                  <h2 className="text-xl font-extrabold text-white">শিক্ষক মণ্ডলীর মূল্যবান মতামত</h2>
+                  <p className="text-xs text-slate-400">হোমপেজে প্রদর্শিত শিক্ষকদের বাণী, মূল্যায়ন ও মন্তব্য এডিট করুন</p>
+                </div>
+                {editingQuoteId && (
+                  <button 
+                    onClick={() => {
+                      setEditingQuoteId(null);
+                      setQName(''); setQDesignation(''); setQDepartment('রসায়ন বিভাগ, রাজশাহী কলেজ'); setQQuote(''); setQImage('');
+                    }}
+                    className="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-xl text-xs font-bold"
+                  >
+                    নতুন তৈরিতে ফিরুন
+                  </button>
+                )}
+              </div>
+
+              {/* Form Block */}
+              <form onSubmit={handleSaveQuote} className="bg-slate-900/30 border border-slate-800 p-5 rounded-2xl space-y-4 text-xs">
+                <h3 className="font-bold text-amber-400 text-sm">
+                  {editingQuoteId ? 'বাণী সংশোধন করুন (Editing)' : 'নতুন বাণী যুক্ত করুন (Add New)'}
+                </h3>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block font-bold text-slate-300 mb-1">শিক্ষকের নাম (Name) *</label>
+                    <input
+                      type="text" required value={qName} onChange={(e) => setQName(e.target.value)}
+                      placeholder="যেমন: প্রফেসর এম. এ. খালেক"
+                      className="w-full px-3.5 py-2 bg-slate-950 text-white border border-slate-800 rounded-xl outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-bold text-slate-300 mb-1">পদবী (Designation) *</label>
+                    <input
+                      type="text" required value={qDesignation} onChange={(e) => setQDesignation(e.target.value)}
+                      placeholder="যেমন: বিভাগীয় প্রধান"
+                      className="w-full px-3.5 py-2 bg-slate-950 text-white border border-slate-800 rounded-xl outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-bold text-slate-300 mb-1">বিভাগ/প্রতিষ্ঠানের নাম (Department/Institution)</label>
+                    <input
+                      type="text" value={qDepartment} onChange={(e) => setQDepartment(e.target.value)}
+                      placeholder="যেমন: রসায়ন বিভাগ, রাজশাহী কলেজ"
+                      className="w-full px-3.5 py-2 bg-slate-950 text-white border border-slate-800 rounded-xl outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block font-bold text-slate-300 mb-1">মূল্যবান মতামত / বাণী (Opinion/Quote) *</label>
+                  <textarea
+                    required
+                    rows={4}
+                    value={qQuote}
+                    onChange={(e) => setQQuote(e.target.value)}
+                    placeholder="যেমন: রসায়ন শিক্ষার গুণগত মান উন্নত করতে এবং গবেষণার প্রসার ঘটাতে অ্যালামনাই অ্যাসোসিয়েশন অত্যন্ত তাৎপর্যপূর্ণ ভূমিকা পালন করছে..."
+                    className="w-full px-3.5 py-2 bg-slate-950 text-white border border-slate-800 rounded-xl outline-none leading-relaxed"
+                  />
+                </div>
+
+                {/* Picture Image Upload Helper */}
+                <ImageUploadHelper 
+                  label="শিক্ষকের ছবি (Image URL or direct upload)"
+                  value={qImage}
+                  onChange={setQImage}
+                />
+
+                <button
+                  type="submit"
+                  className="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-black py-2.5 rounded-xl cursor-pointer transition-colors"
+                >
+                  {editingQuoteId ? 'বাণী ও মূল্যায়ন আপডেট করুন' : 'নতুন বাণী ও মূল্যায়ন প্রকাশ করুন'}
+                </button>
+              </form>
+
+              {/* Quotes List Grid */}
+              <div className="space-y-3">
+                <h3 className="font-bold text-white text-xs">বর্তমান শিক্ষকদের বাণী ও মতামতের তালিকা ({teacherQuotes.length} টি)</h3>
+                <div className="grid grid-cols-1 gap-4">
+                  {teacherQuotes.map(q => (
+                    <div key={q.id} className="bg-slate-900/40 border border-slate-800 p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                      <div className="flex items-start gap-3.5 text-xs min-w-0 flex-1">
+                        <img src={q.image} alt={q.name} className="w-12 h-12 rounded-full object-cover border border-amber-500/20 bg-slate-950 shrink-0" />
+                        <div className="min-w-0 space-y-1">
+                          <div className="flex flex-wrap items-baseline gap-x-2">
+                            <span className="font-bold text-white">{q.name}</span>
+                            <span className="text-amber-400 text-[10px] font-semibold">{q.designation}</span>
+                            <span className="text-slate-400 text-[9px] font-medium">{q.department}</span>
+                          </div>
+                          <p className="text-slate-300 italic text-[11px] leading-relaxed line-clamp-2">"{q.quote}"</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
+                        <button 
+                          onClick={() => startEditQuote(q)} 
+                          className="p-1.5 bg-slate-800 hover:bg-slate-700 text-amber-400 rounded-lg transition-colors cursor-pointer"
+                          title="সম্পাদনা করুন"
+                        >
+                          <Edit className="w-3.5 h-3.5" />
+                        </button>
+                        <button 
+                          onClick={() => handleDeleteQuote(q.id)} 
                           className="p-1.5 bg-rose-950/40 hover:bg-rose-900/50 text-rose-400 rounded-lg transition-colors cursor-pointer"
                           title="মুছে ফেলুন"
                         >

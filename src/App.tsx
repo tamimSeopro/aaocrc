@@ -4,7 +4,7 @@
  */
 
 import { useState } from 'react';
-import { PageTab, NoticeItem, EventItem, MembershipApplication, TeacherProfile, NotableAlumni, GallerySlide } from './types';
+import { PageTab, NoticeItem, EventItem, MembershipApplication, TeacherProfile, NotableAlumni, GallerySlide, TeacherQuote } from './types';
 import { 
   TEACHER_QUOTES, 
   INITIAL_NOTICES, 
@@ -37,6 +37,23 @@ export default function App() {
   
   const [teachers, setTeachers] = useState<TeacherProfile[]>(DEPARTMENT_TEACHERS);
   const [notableAlumni, setNotableAlumni] = useState<NotableAlumni[]>(NOTABLE_ALUMNI);
+
+  const [teacherQuotes, setTeacherQuotes] = useState<TeacherQuote[]>(() => {
+    const saved = localStorage.getItem('aaa_teacher_quotes');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    return TEACHER_QUOTES;
+  });
+
+  const handleUpdateTeacherQuotes = (updated: TeacherQuote[]) => {
+    setTeacherQuotes(updated);
+    localStorage.setItem('aaa_teacher_quotes', JSON.stringify(updated));
+  };
   
   // Slide gallery dynamic options
   const [gallerySlides, setGallerySlides] = useState<GallerySlide[]>(INITIAL_GALLERY_SLIDES);
@@ -78,7 +95,7 @@ export default function App() {
         {activeTab === 'home' && (
           <Home
             setActiveTab={setActiveTab}
-            teacherQuotes={TEACHER_QUOTES}
+            teacherQuotes={teacherQuotes}
             notices={notices}
             events={events}
             gallerySlides={gallerySlides}
@@ -127,6 +144,8 @@ export default function App() {
             setGallerySubheadline={setGallerySubheadline}
             galleryDescription={galleryDescription}
             setGalleryDescription={setGalleryDescription}
+            teacherQuotes={teacherQuotes}
+            setTeacherQuotes={handleUpdateTeacherQuotes}
           />
         )}
       </main>
