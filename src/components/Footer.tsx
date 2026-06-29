@@ -125,13 +125,6 @@ export default function Footer({ setActiveTab }: FooterProps) {
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
               <span>সদস্য প্রিভিলেজ ও কার্ড</span>
             </li>
-            <li 
-              onClick={() => { setActiveTab('admin'); scrollToTop(); }}
-              className="flex items-center gap-2 hover:text-amber-400 cursor-pointer transition-colors"
-            >
-              <CheckCircle2 className="w-3.5 h-3.5 text-amber-500" />
-              <span className="font-semibold text-slate-300 hover:text-amber-400">অ্যাডমিন পোর্টাল (Admin Portal)</span>
-            </li>
           </ul>
         </div>
 

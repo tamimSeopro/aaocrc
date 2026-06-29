@@ -1,12 +1,13 @@
-import { PageTab } from '../types';
+import { PageTab, ExecutiveMember } from '../types';
 import { MILESTONES, EXECUTIVE_COMMITTEE } from '../data/mockData';
 import { Target, Award, BookOpen, Clock, Users } from 'lucide-react';
 
 interface AboutProps {
   setActiveTab: (tab: PageTab) => void;
+  executiveMembers: ExecutiveMember[];
 }
 
-export default function About({ setActiveTab }: AboutProps) {
+export default function About({ setActiveTab, executiveMembers }: AboutProps) {
   return (
     <div className="w-full space-y-16 py-10 max-w-7xl mx-auto px-6 relative z-10 select-none">
       {/* Title Header */}
@@ -115,8 +116,8 @@ export default function About({ setActiveTab }: AboutProps) {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2">
-          {EXECUTIVE_COMMITTEE.map((mem, idx) => (
-            <div key={idx} className="bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-800/80 p-6 text-center shadow-sm hover:shadow-lg hover:border-amber-500/30 transition-all flex flex-col items-center space-y-3">
+          {executiveMembers.map((mem) => (
+            <div key={mem.id} className="bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-800/80 p-6 text-center shadow-sm hover:shadow-lg hover:border-amber-500/30 transition-all flex flex-col items-center space-y-3">
               <div className="w-24 h-24 rounded-full p-1 bg-gradient-to-tr from-amber-500 to-[#0b192c] shadow-md">
                 <img
                   src={mem.image}
@@ -127,7 +128,7 @@ export default function About({ setActiveTab }: AboutProps) {
               <div className="space-y-1">
                 <h4 className="font-bold text-white text-sm">{mem.name}</h4>
                 <p className="text-xs font-extrabold text-amber-400">{mem.role}</p>
-                <p className="text-[11px] text-slate-400 pt-1">{mem.edu}</p>
+                <p className="text-[11px] text-slate-400 pt-1 whitespace-pre-line">{mem.edu}</p>
               </div>
             </div>
           ))}

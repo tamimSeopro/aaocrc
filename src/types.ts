@@ -9,6 +9,14 @@ export interface TeacherQuote {
   image: string;
 }
 
+export interface ExecutiveMember {
+  id: string;
+  name: string;
+  role: string;
+  edu: string;
+  image: string;
+}
+
 export interface TeacherProfile {
   id: string;
   code: string;

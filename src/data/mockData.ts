@@ -1,4 +1,4 @@
-import { TeacherQuote, TeacherProfile, NotableAlumni, EventItem, NoticeItem, MembershipApplication } from '../types';
+import { TeacherQuote, TeacherProfile, NotableAlumni, EventItem, NoticeItem, MembershipApplication, ExecutiveMember } from '../types';
 
 export const TEACHER_QUOTES: TeacherQuote[] = [
   {
@@ -222,11 +222,11 @@ export const MILESTONES = [
   { year: '১৯৯৩', title: 'মাস্টার্স চালু', desc: 'স্নাতকোত্তর (মাস্টার্স) কোর্স চালু' }
 ];
 
-export const EXECUTIVE_COMMITTEE = [
-  { name: 'Dr. Md. Sajedul Islam', role: 'বিভাগীয় প্রধান ও সভাপতি', edu: 'পিএইচডি, রাজশাহী বিশ্ববিদ্যালয়', image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80' },
-  { name: 'Md. Monirul Islam', role: 'সহকারী অধ্যাপক ও সহ-সভাপতি', edu: 'এম.এসসি, রাজশাহী বিশ্ববিদ্যালয়', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80' },
-  { name: 'Shabnam Sultana', role: 'সহযোগী অধ্যাপক ও সাধারণ সম্পাদক', edu: 'এম.এসসি, রাজশাহী বিশ্ববিদ্যালয়', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&auto=format&fit=crop&q=80' },
-  { name: 'Dr. Mahmud Hasan Tareque', role: 'সহযোগী অধ্যাপক ও কোষাধ্যক্ষ', edu: 'পিএইচডি, রাজশাহী বিশ্ববিদ্যালয়', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80' }
+export const EXECUTIVE_COMMITTEE: ExecutiveMember[] = [
+  { id: 'exe-1', name: 'Dr. Md. Sajedul Islam', role: 'বিভাগীয় প্রধান ও সভাপতি', edu: 'পিএইচডি, রাজশাহী বিশ্ববিদ্যালয়', image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80' },
+  { id: 'exe-2', name: 'Md. Monirul Islam', role: 'সহকারী অধ্যাপক ও সহ-সভাপতি', edu: 'এম.এসসি, রাজশাহী বিশ্ববিদ্যালয়', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80' },
+  { id: 'exe-3', name: 'Shabnam Sultana', role: 'সহযোগী অধ্যাপক ও সাধারণ সম্পাদক', edu: 'এম.এসসি, রাজশাহী বিশ্ববিদ্যালয়', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&auto=format&fit=crop&q=80' },
+  { id: 'exe-4', name: 'Dr. Mahmud Hasan Tareque', role: 'সহযোগী অধ্যাপক ও কোষাধ্যক্ষ', edu: 'পিএইচডি, রাজশাহী বিশ্ববিদ্যালয়', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80' }
 ];
 
 export const MEMBERSHIP_PERKS = [

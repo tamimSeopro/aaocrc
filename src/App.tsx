@@ -4,7 +4,7 @@
  */
 
 import { useState } from 'react';
-import { PageTab, NoticeItem, EventItem, MembershipApplication, TeacherProfile, NotableAlumni, GallerySlide, TeacherQuote } from './types';
+import { PageTab, NoticeItem, EventItem, MembershipApplication, TeacherProfile, NotableAlumni, GallerySlide, TeacherQuote, ExecutiveMember } from './types';
 import { 
   TEACHER_QUOTES, 
   INITIAL_NOTICES, 
@@ -12,7 +12,8 @@ import {
   INITIAL_APPLICATIONS, 
   DEPARTMENT_TEACHERS, 
   NOTABLE_ALUMNI, 
-  INITIAL_GALLERY_SLIDES 
+  INITIAL_GALLERY_SLIDES,
+  EXECUTIVE_COMMITTEE
 } from './data/mockData';
 
 import BackgroundAtoms from './components/BackgroundAtoms';
@@ -53,6 +54,23 @@ export default function App() {
   const handleUpdateTeacherQuotes = (updated: TeacherQuote[]) => {
     setTeacherQuotes(updated);
     localStorage.setItem('aaa_teacher_quotes', JSON.stringify(updated));
+  };
+
+  const [executiveMembers, setExecutiveMembers] = useState<ExecutiveMember[]>(() => {
+    const saved = localStorage.getItem('aaa_executive_members');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    return EXECUTIVE_COMMITTEE;
+  });
+
+  const handleUpdateExecutiveMembers = (updated: ExecutiveMember[]) => {
+    setExecutiveMembers(updated);
+    localStorage.setItem('aaa_executive_members', JSON.stringify(updated));
   };
   
   // Slide gallery dynamic options
@@ -104,7 +122,12 @@ export default function App() {
             galleryDescription={galleryDescription}
           />
         )}
-        {activeTab === 'about' && <About setActiveTab={setActiveTab} />}
+        {activeTab === 'about' && (
+          <About 
+            setActiveTab={setActiveTab} 
+            executiveMembers={executiveMembers} 
+          />
+        )}
         {activeTab === 'alumni' && (
           <AlumniMember 
             teachers={teachers}
@@ -146,6 +169,8 @@ export default function App() {
             setGalleryDescription={setGalleryDescription}
             teacherQuotes={teacherQuotes}
             setTeacherQuotes={handleUpdateTeacherQuotes}
+            executiveMembers={executiveMembers}
+            setExecutiveMembers={handleUpdateExecutiveMembers}
           />
         )}
       </main>

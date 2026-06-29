@@ -173,9 +173,9 @@ export default function Home({
                 />
 
                 <div className="space-y-2 flex-1">
-                  <p className="text-xs sm:text-sm text-slate-300 italic leading-relaxed">
+                  <div className="text-xs sm:text-sm text-slate-300 italic leading-relaxed whitespace-pre-line">
                     "{tq.quote}"
-                  </p>
+                  </div>
                   <div className="pt-1">
                     <h4 className="font-bold text-slate-100 text-sm">{tq.name}</h4>
                     <p className="text-xs text-amber-400 font-semibold">{tq.designation}</p>

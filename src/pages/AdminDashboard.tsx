@@ -9,7 +9,8 @@ import {
   GallerySlide,
   Moderator,
   AdminPermissions,
-  TeacherQuote
+  TeacherQuote,
+  ExecutiveMember
 } from '../types';
 import { 
   LayoutDashboard, 
@@ -65,6 +66,8 @@ interface AdminDashboardProps {
   setGalleryDescription: (s: string) => void;
   teacherQuotes: TeacherQuote[];
   setTeacherQuotes: (quotes: TeacherQuote[]) => void;
+  executiveMembers: ExecutiveMember[];
+  setExecutiveMembers: (members: ExecutiveMember[]) => void;
 }
 
 export default function AdminDashboard({
@@ -90,7 +93,9 @@ export default function AdminDashboard({
   galleryDescription,
   setGalleryDescription,
   teacherQuotes,
-  setTeacherQuotes
+  setTeacherQuotes,
+  executiveMembers,
+  setExecutiveMembers
 }: AdminDashboardProps) {
   // Login State
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -106,7 +111,7 @@ export default function AdminDashboard({
   } | null>(null);
 
   // Dashboard Sub-Tabs State
-  const [activeSubTab, setActiveSubTab] = useState<'overview' | 'teachers' | 'quotes' | 'notices' | 'gallery' | 'members' | 'alumni' | 'events' | 'registrations' | 'inbox' | 'settings' | 'moderators'>('overview');
+  const [activeSubTab, setActiveSubTab] = useState<'overview' | 'teachers' | 'quotes' | 'executives' | 'notices' | 'gallery' | 'members' | 'alumni' | 'events' | 'registrations' | 'inbox' | 'settings' | 'moderators'>('overview');
 
   // Unified Success/Save States
   const [saveSuccess, setSaveSuccess] = useState(false);
@@ -214,6 +219,13 @@ export default function AdminDashboard({
   const [qDepartment, setQDepartment] = useState('রসায়ন বিভাগ, রাজশাহী কলেজ');
   const [qQuote, setQQuote] = useState('');
   const [qImage, setQImage] = useState('');
+
+  // --- 1c. Executive Members Editor States ---
+  const [editingExeId, setEditingExeId] = useState<string | null>(null);
+  const [exeName, setExeName] = useState('');
+  const [exeRole, setExeRole] = useState('');
+  const [exeEdu, setExeEdu] = useState('');
+  const [exeImage, setExeImage] = useState('');
 
   // --- 2. Notices Editor States ---
   const [editingNoticeId, setEditingNoticeId] = useState<string | null>(null);
@@ -540,6 +552,51 @@ export default function AdminDashboard({
 
   const handleDeleteQuote = (id: string) => {
     setTeacherQuotes(teacherQuotes.filter(q => q.id !== id));
+  };
+
+  // 1c. Executive Members CRUD Handlers
+  const handleSaveExecutiveMember = (e: FormEvent) => {
+    e.preventDefault();
+    if (!exeName || !exeRole) return;
+
+    if (editingExeId) {
+      setExecutiveMembers(
+        executiveMembers.map(m => m.id === editingExeId ? {
+          ...m,
+          name: exeName,
+          role: exeRole,
+          edu: exeEdu,
+          image: exeImage || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'
+        } : m)
+      );
+      setEditingExeId(null);
+    } else {
+      const newMember: ExecutiveMember = {
+        id: `exe-${Date.now()}`,
+        name: exeName,
+        role: exeRole,
+        edu: exeEdu,
+        image: exeImage || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'
+      };
+      setExecutiveMembers([...executiveMembers, newMember]);
+    }
+
+    // Reset Form
+    setExeName(''); setExeRole(''); setExeEdu(''); setExeImage('');
+    setSaveSuccess(true);
+    setTimeout(() => setSaveSuccess(false), 2500);
+  };
+
+  const startEditExecutiveMember = (m: ExecutiveMember) => {
+    setEditingExeId(m.id);
+    setExeName(m.name);
+    setExeRole(m.role);
+    setExeEdu(m.edu);
+    setExeImage(m.image);
+  };
+
+  const handleDeleteExecutiveMember = (id: string) => {
+    setExecutiveMembers(executiveMembers.filter(m => m.id !== id));
   };
 
   // 2. Notices Save/Submit
@@ -1043,6 +1100,27 @@ export default function AdminDashboard({
                     activeSubTab === 'quotes' ? 'bg-slate-950 text-amber-400' : 'bg-slate-800 text-slate-400'
                   }`}>
                     {teacherQuotes.length}
+                  </span>
+                </button>
+              )}
+
+              {hasPermission('teachers') && (
+                <button
+                  onClick={() => setActiveSubTab('executives')}
+                  className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl transition-all cursor-pointer ${
+                    activeSubTab === 'executives'
+                      ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
+                      : 'hover:bg-slate-900 hover:text-white'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Users className="w-4 h-4" />
+                    <span>Executive Committee (নির্বাহী কমিটি)</span>
+                  </div>
+                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                    activeSubTab === 'executives' ? 'bg-slate-950 text-amber-400' : 'bg-slate-800 text-slate-400'
+                  }`}>
+                    {executiveMembers.length}
                   </span>
                 </button>
               )}
@@ -1562,7 +1640,7 @@ export default function AdminDashboard({
                     value={qQuote}
                     onChange={(e) => setQQuote(e.target.value)}
                     placeholder="যেমন: রসায়ন শিক্ষার গুণগত মান উন্নত করতে এবং গবেষণার প্রসার ঘটাতে অ্যালামনাই অ্যাসোসিয়েশন অত্যন্ত তাৎপর্যপূর্ণ ভূমিকা পালন করছে..."
-                    className="w-full px-3.5 py-2 bg-slate-950 text-white border border-slate-800 rounded-xl outline-none leading-relaxed"
+                    className="w-full px-3.5 py-2 bg-slate-950 text-white border border-slate-800 rounded-xl outline-none leading-relaxed whitespace-pre-line"
                   />
                 </div>
 
@@ -1595,7 +1673,7 @@ export default function AdminDashboard({
                             <span className="text-amber-400 text-[10px] font-semibold">{q.designation}</span>
                             <span className="text-slate-400 text-[9px] font-medium">{q.department}</span>
                           </div>
-                          <p className="text-slate-300 italic text-[11px] leading-relaxed line-clamp-2">"{q.quote}"</p>
+                          <p className="text-slate-300 italic text-[11px] leading-relaxed line-clamp-2 whitespace-pre-line">"{q.quote}"</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
@@ -1608,6 +1686,112 @@ export default function AdminDashboard({
                         </button>
                         <button 
                           onClick={() => handleDeleteQuote(q.id)} 
+                          className="p-1.5 bg-rose-950/40 hover:bg-rose-900/50 text-rose-400 rounded-lg transition-colors cursor-pointer"
+                          title="মুছে ফেলুন"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Tab 2c: Executive Members Editor */}
+          {activeSubTab === 'executives' && (
+            <div className="space-y-6 animate-in fade-in duration-200">
+              <div className="border-b border-slate-800 pb-3 flex justify-between items-center">
+                <div>
+                  <h2 className="text-xl font-extrabold text-white">নির্বাহী কমিটির সদস্যবৃন্দ (Executive Committee)</h2>
+                  <p className="text-xs text-slate-400">অ্যাসোসিয়েশনের কার্যনির্বাহী কমিটির কর্মকর্তা ও সদস্যবৃন্দের তালিকা এডিট করুন</p>
+                </div>
+                {editingExeId && (
+                  <button 
+                    onClick={() => {
+                      setEditingExeId(null);
+                      setExeName(''); setExeRole(''); setExeEdu(''); setExeImage('');
+                    }}
+                    className="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-xl text-xs font-bold"
+                  >
+                    নতুন তৈরিতে ফিরুন
+                  </button>
+                )}
+              </div>
+
+              {/* Form Block */}
+              <form onSubmit={handleSaveExecutiveMember} className="bg-slate-900/30 border border-slate-800 p-5 rounded-2xl space-y-4 text-xs">
+                <h3 className="font-bold text-amber-400 text-sm">
+                  {editingExeId ? 'কমিটি সদস্য সংশোধন করুন (Editing)' : 'নতুন কমিটি সদস্য যুক্ত করুন (Add New)'}
+                </h3>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block font-bold text-slate-300 mb-1">সদস্যের নাম (Name) *</label>
+                    <input
+                      type="text" required value={exeName} onChange={(e) => setExeName(e.target.value)}
+                      placeholder="যেমন: ড. মাহফুজ হোসেন"
+                      className="w-full px-3.5 py-2 bg-slate-950 text-white border border-slate-800 rounded-xl outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-bold text-slate-300 mb-1">কমিটি পদবী (Role in Committee) *</label>
+                    <input
+                      type="text" required value={exeRole} onChange={(e) => setExeRole(e.target.value)}
+                      placeholder="যেমন: কোষাধ্যক্ষ / প্রচার সম্পাদক"
+                      className="w-full px-3.5 py-2 bg-slate-950 text-white border border-slate-800 rounded-xl outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-bold text-slate-300 mb-1">ডিগ্রী বা পেশাগত পরিচয় (Education/Affiliation)</label>
+                    <input
+                      type="text" value={exeEdu} onChange={(e) => setExeEdu(e.target.value)}
+                      placeholder="যেমন: পিএইচডি, রাজশাহী বিশ্ববিদ্যালয়"
+                      className="w-full px-3.5 py-2 bg-slate-950 text-white border border-slate-800 rounded-xl outline-none"
+                    />
+                  </div>
+                </div>
+
+                {/* Picture Image Upload Helper */}
+                <ImageUploadHelper 
+                  label="সদস্যের ছবি (Image URL or direct upload)"
+                  value={exeImage}
+                  onChange={setExeImage}
+                />
+
+                <button
+                  type="submit"
+                  className="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-black py-2.5 rounded-xl cursor-pointer transition-colors"
+                >
+                  {editingExeId ? 'কমিটি সদস্য আপডেট করুন' : 'নতুন কমিটি সদস্য যুক্ত করুন'}
+                </button>
+              </form>
+
+              {/* Executives List Grid */}
+              <div className="space-y-3">
+                <h3 className="font-bold text-white text-xs">বর্তমান নির্বাহী কমিটির তালিকা ({executiveMembers.length} জন)</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {executiveMembers.map(m => (
+                    <div key={m.id} className="bg-slate-900/40 border border-slate-800 p-4 rounded-xl flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-3.5 text-xs min-w-0 flex-1">
+                        <img src={m.image} alt={m.name} className="w-12 h-12 rounded-full object-cover border border-amber-500/20 bg-slate-950 shrink-0" />
+                        <div className="min-w-0 space-y-0.5">
+                          <p className="font-bold text-white truncate">{m.name}</p>
+                          <p className="text-amber-400 text-[10px] font-semibold truncate">{m.role}</p>
+                          <p className="text-slate-400 text-[9px] font-medium truncate">{m.edu}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <button 
+                          onClick={() => startEditExecutiveMember(m)} 
+                          className="p-1.5 bg-slate-800 hover:bg-slate-700 text-amber-400 rounded-lg transition-colors cursor-pointer"
+                          title="সম্পাদনা করুন"
+                        >
+                          <Edit className="w-3.5 h-3.5" />
+                        </button>
+                        <button 
+                          onClick={() => handleDeleteExecutiveMember(m.id)} 
                           className="p-1.5 bg-rose-950/40 hover:bg-rose-900/50 text-rose-400 rounded-lg transition-colors cursor-pointer"
                           title="মুছে ফেলুন"
                         >
