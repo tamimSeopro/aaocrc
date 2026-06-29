@@ -1,0 +1,6 @@
+{
+  "name": "Alumni Association of Chemistry, Rajshahi College",
+  "description": "Official portal and alumni network for the Department of Chemistry, Rajshahi College (Established 1909). Featuring alumni directory, teacher profiles, membership tracking, events, and career portal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
