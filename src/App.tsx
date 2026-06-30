@@ -284,10 +284,80 @@ export default function App() {
     return (
       <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-slate-100 font-sans relative overflow-x-hidden">
         <BackgroundAtoms />
-        <div className="z-10 flex flex-col items-center space-y-4 text-center px-4">
-          <Loader2 className="w-12 h-12 text-amber-500 animate-spin" />
-          <h1 className="text-xl font-bold tracking-wider text-amber-400">অ্যাসোসিয়েশন ডাটাবেজ লোড হচ্ছে...</h1>
-          <p className="text-xs text-slate-400">অনুগ্রহ করে অপেক্ষা করুন, ফায়ারবেস ক্লাউড স্টোরেজ থেকে রিয়েল-টাইম ডাটা রিট্রিভ করা হচ্ছে।</p>
+        <style>{`
+          @keyframes orbit-rotate-1 {
+            0% { transform: rotateX(72deg) rotateY(15deg) rotateZ(0deg); }
+            100% { transform: rotateX(72deg) rotateY(15deg) rotateZ(360deg); }
+          }
+          @keyframes orbit-rotate-2 {
+            0% { transform: rotateX(72deg) rotateY(-45deg) rotateZ(0deg); }
+            100% { transform: rotateX(72deg) rotateY(-45deg) rotateZ(360deg); }
+          }
+          @keyframes orbit-rotate-3 {
+            0% { transform: rotateX(60deg) rotateY(65deg) rotateZ(0deg); }
+            100% { transform: rotateX(60deg) rotateY(65deg) rotateZ(360deg); }
+          }
+          @keyframes nucleus-pulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.45)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(244, 63, 94, 0.75)); }
+          }
+        `}</style>
+        
+        <div className="z-10 flex flex-col items-center space-y-8 text-center px-4 max-w-lg">
+          {/* Animated 3D Nuclear Atom Structure */}
+          <div className="relative w-72 h-72 flex items-center justify-center" style={{ perspective: '1200px' }}>
+            {/* Orbit 1 */}
+            <div 
+              className="absolute w-60 h-60 rounded-full border border-dashed border-amber-500/40"
+              style={{
+                transformStyle: 'preserve-3d',
+                animation: 'orbit-rotate-1 4s linear infinite'
+              }}
+            >
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-amber-400 rounded-full shadow-[0_0_15px_#fbbf24] animate-pulse"></div>
+            </div>
+
+            {/* Orbit 2 */}
+            <div 
+              className="absolute w-60 h-60 rounded-full border border-dashed border-rose-500/40"
+              style={{
+                transformStyle: 'preserve-3d',
+                animation: 'orbit-rotate-2 3.2s linear infinite'
+              }}
+            >
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-rose-500 rounded-full shadow-[0_0_15px_#f43f5e] animate-pulse"></div>
+            </div>
+
+            {/* Orbit 3 */}
+            <div 
+              className="absolute w-60 h-60 rounded-full border border-dashed border-blue-500/40"
+              style={{
+                transformStyle: 'preserve-3d',
+                animation: 'orbit-rotate-3 4.8s linear infinite'
+              }}
+            >
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-blue-400 rounded-full shadow-[0_0_15px_#60a5fa] animate-pulse"></div>
+            </div>
+
+            {/* Nucleus (Chemistry Logo) */}
+            <div className="absolute w-22 h-22 rounded-full bg-white flex items-center justify-center border border-slate-200 shadow-2xl overflow-hidden z-20">
+              <img 
+                src="https://6a3ffaa0f4f12d1dab644ce8.imgix.net/chemistry/chemistry logo.png" 
+                alt="Chemistry Logo" 
+                className="w-full h-full object-contain scale-[1.5] animate-[nucleus-pulse_3s_ease-in-out_infinite]"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <h1 className="text-2xl font-black tracking-wider bg-gradient-to-r from-amber-400 via-rose-400 to-amber-500 bg-clip-text text-transparent">
+              অ্যাসোসিয়েশন ডাটাবেজ লোড হচ্ছে...
+            </h1>
+            <p className="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed">
+              অনুগ্রহ করে অপেক্ষা করুন, ফায়ারবেস ক্লাউড স্টোরেজ থেকে রিয়েল-টাইম ডাটা রিট্রিভ করা হচ্ছে।
+            </p>
+          </div>
         </div>
       </div>
     );

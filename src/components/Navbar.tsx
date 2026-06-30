@@ -36,13 +36,6 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full shadow-lg bg-slate-950/75 backdrop-blur-md border-b border-slate-800/80">
-      {/* Top Bar */}
-      <div className="bg-[#0b192c]/90 text-white px-4 py-1.5 text-xs font-medium border-b border-slate-800/50">
-        <div className="max-w-7xl mx-auto flex justify-center items-center">
-          <span className="tracking-wide text-slate-300">Alumni Association of Chemistry</span>
-        </div>
-      </div>
-
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Brand Logo & Title */}
@@ -50,12 +43,12 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
           onClick={() => handleNavClick('home')}
           className="flex items-center gap-3 cursor-pointer group select-none"
         >
-          <div className="relative flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-tr from-blue-900 via-indigo-800 to-amber-500 p-0.5 shadow-md group-hover:scale-105 transition-transform">
-            <div className="w-full h-full bg-slate-900 rounded-full flex items-center justify-center overflow-hidden border border-slate-800">
+          <div className="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-blue-900 via-indigo-800 to-amber-500 p-0.5 shadow-md group-hover:scale-105 transition-transform">
+            <div className="w-full h-full bg-white rounded-full flex items-center justify-center overflow-hidden border border-slate-200">
               <img 
                 src="https://6a3ffaa0f4f12d1dab644ce8.imgix.net/chemistry/chemistry logo.png" 
                 alt="Chemistry Logo" 
-                className="w-full h-full object-contain p-0.5"
+                className="w-full h-full object-contain scale-[1.5]"
                 referrerPolicy="no-referrer"
               />
             </div>

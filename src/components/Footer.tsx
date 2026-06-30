@@ -47,11 +47,11 @@ export default function Footer({ setActiveTab }: FooterProps) {
         {/* Col 1: Brand & About */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center shadow overflow-hidden border border-slate-800">
+            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow overflow-hidden border border-slate-200">
               <img 
                 src="https://6a3ffaa0f4f12d1dab644ce8.imgix.net/chemistry/chemistry logo.png" 
                 alt="Chemistry Logo" 
-                className="w-full h-full object-contain p-0.5"
+                className="w-full h-full object-contain scale-[1.5]"
                 referrerPolicy="no-referrer"
               />
             </div>
@@ -171,6 +171,42 @@ export default function Footer({ setActiveTab }: FooterProps) {
             <div className="flex items-center gap-2.5">
               <Phone className="w-4 h-4 text-amber-400 shrink-0" />
               <span>০১৭১১-৯৮৮৩৯২ (অধ্যাপক সাজেদুল)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* SEO Google Search Keywords Tag Section (Visually hidden for search engine crawlers) */}
+      <div className="absolute opacity-0 pointer-events-none w-0 h-0 overflow-hidden" aria-hidden="true">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-2 text-slate-400 font-bold text-xs uppercase tracking-wider">
+              <Search className="w-3.5 h-3.5 text-amber-500" />
+              <span>অনুসন্ধান ট্যাগ ও কি-ওয়ার্ডস (Google SEO Search Keywords)</span>
+            </div>
+            <p className="text-[10px] text-slate-500 max-w-3xl leading-relaxed">
+              রাজশাহী কলেজ রসায়ন বিভাগের প্রাক্তন শিক্ষার্থী, শিক্ষকবৃন্দ এবং শুভাকাঙ্ক্ষীদের জন্য গুগলে সহজে অনুসন্ধানযোগ্য করতে নিচের ১০০টি গুরুত্বপূর্ণ কি-ওয়ার্ড ও অনুসন্ধান ট্যাগ যুক্ত করা হয়েছে।
+            </p>
+            <div className="flex flex-wrap gap-1.5 pt-2 max-h-48 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
+              {[
+                "Rajshahi College Chemistry", "Rajshahi College Chemistry Department", "Rajshahi College Chemistry Alumni", "Rajshahi College Chemistry Alumni Association", "Rajshahi College Chemistry Admission", "Rajshahi College Chemistry Faculty", "Rajshahi College Alumni", "Rajshahi College Chemistry Syllabus", "Rajshahi College Chemistry Notice", "Rajshahi College Chemistry Event", 
+                "Rajshahi College Chemistry Department Website", "Rajshahi College Chemistry teachers", "Rajshahi College chemistry laboratory", "Rajshahi College chemistry seminar", "Rajshahi College chemistry alumni list", "Rajshahi College chemistry club", "RC Chemistry Department", "RC Chemistry Alumni", "RC Chemistry Association", "RC Chemistry Admission 2026", 
+                "Rajshahi College Chemistry Honours", "Rajshahi College Chemistry Masters", "Rajshahi College Chemistry PhD", "Rajshahi College Chemistry Research", "Rajshahi College Chemistry Publications", "Rajshahi College Science Department", "Rajshahi College Alumni Portal", "Rajshahi College Chemistry Club", "RC Chemistry Alumni Committee", "Chemistry Department Rajshahi College", 
+                "Chemistry Alumni Rajshahi College", "Rajshahi College chemistry news", "Rajshahi College chemistry department head", "Rajshahi College chemistry registration", "Rajshahi College chemistry membership", "Rajshahi College chemistry syllabus pdf", "Rajshahi College chemistry result", "Rajshahi College chemistry exam routine", "Rajshahi College chemistry class schedule", "Rajshahi College chemistry laboratory equipments", 
+                "Rajshahi College chemistry career paths", "Rajshahi College chemistry job opportunities", "Rajshahi College chemistry scholarship", "Rajshahi College chemistry research group", "Rajshahi College chemistry publications list", "Rajshahi College chemistry journal", "Rajshahi College chemistry conference", "Rajshahi College chemistry workshop", "Rajshahi College chemistry reunion", "Rajshahi College chemistry picnic", 
+                "রাজশাহী কলেজ রসায়ন বিভাগ", "রাজশাহী কলেজ রসায়ন অ্যালামনাই", "রাজশাহী কলেজ রসায়ন অ্যালামনাই অ্যাসোসিয়েশন", "রাজশাহী কলেজ রসায়ন ভর্তি", "রাজশাহী কলেজ রসায়ন শিক্ষক", "রাজশাহী কলেজ অ্যালামনাই", "রাজশাহী কলেজ রসায়ন সিলেবাস", "রাজশাহী কলেজ রসায়ন নোটিশ", "রাজশাহী কলেজ রসায়ন ইভেন্ট", "রাজশাহী কলেজ রসায়ন বিভাগীয় ওয়েবসাইট", 
+                "রাজশাহী কলেজ রসায়ন শিক্ষকবৃন্দ", "রাজশাহী কলেজ রসায়ন গবেষণাগার", "রাজশাহী কলেজ রসায়ন সেমিনার", "রাজশাহী কলেজ রসায়ন অ্যালামনাই তালিকা", "রাজশাহী কলেজ রসায়ন ক্লাব", "আরসি রসায়ন বিভাগ", "আরসি রসায়ন অ্যালামনাই", "আরসি রসায়ন অ্যাসোসিয়েশন", "আরসি রসায়ন ভর্তি ২০২৬", "রাজশাহী কলেজ রসায়ন অনার্স", 
+                "রাজশাহী কলেজ রসায়ন মাস্টার্স", "রাজশাহী কলেজ রসায়ন পিএইচডি", "রাজশাহী কলেজ রসায়ন গবেষণা", "রাজশাহী কলেজ রসায়ন প্রকাশনা", "রাজশাহী কলেজ বিজ্ঞান বিভাগ", "রাজশাহী কলেজ অ্যালামনাই পোর্টাল", "রাজশাহী কলেজ রসায়ন ক্লাব", "আরসি রসায়ন অ্যালামনাই কমিটি", "রসায়ন বিভাগ রাজশাহী কলেজ", "রসায়ন অ্যালামনাই রাজশাহী কলেজ", 
+                "রাজশাহী কলেজ রসায়ন খবর", "রাজশাহী কলেজ রসায়ন বিভাগীয় প্রধান", "রাজশাহী কলেজ রসায়ন নিবন্ধন", "রাজশাহী কলেজ রসায়ন সদস্যপদ", "রাজশাহী কলেজ রসায়ন সিলেবাস পিডিএফ", "রাজশাহী কলেজ রসায়ন ফলাফল", "রাজশাহী কলেজ রসায়ন পরীক্ষার রুটিন", "রাজশাহী কলেজ রসায়ন ক্লাস শিডিউল", "রাজশাহী কলেজ রসায়ন ল্যাবরেটরি যন্ত্রপাতি", "রাজশাহী কলেজ রসায়ন ক্যারিয়ার পাথ", 
+                "রাজশাহী কলেজ রসায়ন চাকরির সুযোগ", "রাজশাহী কলেজ রসায়ন বৃত্তি", "রাজশাহী কলেজ রসায়ন গবেষণা গ্রুপ", "রাজশাহী কলেজ রসায়ন প্রকাশনা তালিকা", "রাজশাহী কলেজ রসায়ন জার্নাল", "রাজশাহী কলেজ রসায়ন সম্মেলন", "রাজশাহী কলেজ রসায়ন কর্মশালা", "রাজশাহী কলেজ রসায়ন পুনর্মিলনী", "রাজশাহী কলেজ রসায়ন পিকনিক", "রাজশাহী কলেজ রসায়ন অনুষ্ঠান"
+              ].map((tag, idx) => (
+                <span 
+                  key={idx} 
+                  className="px-2 py-0.5 text-[10px] font-mono rounded bg-slate-900 border border-slate-800 text-slate-500 hover:text-amber-400 hover:border-amber-500/30 transition-all cursor-default select-all"
+                >
+                  #{tag.replace(/\s+/g, '')}
+                </span>
+              ))}
             </div>
           </div>
         </div>
