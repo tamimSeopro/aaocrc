@@ -1,0 +1,115 @@
+{
+  "collections": {
+    "notices": {
+      "description": "Notice board announcements",
+      "fields": {
+        "id": "string",
+        "title": "string",
+        "date": "string",
+        "isUrgent": "boolean",
+        "content": "string",
+        "category": "string (optional)",
+        "pdfUrl": "string (optional)"
+      }
+    },
+    "events": {
+      "description": "Department events and programs",
+      "fields": {
+        "id": "string",
+        "title": "string",
+        "date": "string",
+        "time": "string",
+        "location": "string",
+        "category": "string",
+        "description": "string",
+        "image": "string (optional)",
+        "badge": "string (optional)"
+      }
+    },
+    "applications": {
+      "description": "Membership applications",
+      "fields": {
+        "id": "string",
+        "trackingCode": "string",
+        "fullName": "string",
+        "email": "string",
+        "phone": "string",
+        "institution": "string",
+        "major": "string",
+        "passingYear": "string",
+        "membershipTier": "string",
+        "additionalInfo": "string (optional)",
+        "status": "string ('pending' | 'approved' | 'rejected')",
+        "appliedDate": "string"
+      }
+    },
+    "teachers": {
+      "description": "Teacher profiles",
+      "fields": {
+        "id": "string",
+        "code": "string",
+        "name": "string",
+        "designation": "string",
+        "education": "string",
+        "phone": "string",
+        "researchInterest": "string",
+        "email": "string",
+        "image": "string",
+        "category": "string"
+      }
+    },
+    "notableAlumni": {
+      "description": "Notable alumni profiles",
+      "fields": {
+        "id": "string",
+        "name": "string",
+        "classOf": "string",
+        "currentPosition": "string",
+        "organization": "string",
+        "achievements": "string",
+        "email": "string",
+        "image": "string"
+      }
+    },
+    "teacherQuotes": {
+      "description": "Teacher opinions and quotes",
+      "fields": {
+        "id": "string",
+        "name": "string",
+        "designation": "string",
+        "department": "string",
+        "quote": "string",
+        "image": "string"
+      }
+    },
+    "executiveMembers": {
+      "description": "Executive committee members",
+      "fields": {
+        "id": "string",
+        "name": "string",
+        "role": "string",
+        "edu": "string",
+        "image": "string"
+      }
+    },
+    "gallerySlides": {
+      "description": "Photo gallery slides",
+      "fields": {
+        "id": "string",
+        "url": "string",
+        "title": "string",
+        "description": "string"
+      }
+    },
+    "settings": {
+      "description": "App settings and general text content",
+      "documents": {
+        "gallery": {
+          "headline": "string",
+          "subheadline": "string",
+          "description": "string"
+        }
+      }
+    }
+  }
+}

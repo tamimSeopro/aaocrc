@@ -41,6 +41,7 @@ import {
   Shield,
   UserPlus
 } from 'lucide-react';
+import { saveSettingsDoc } from '../firebase';
 
 interface AdminDashboardProps {
   events: EventItem[];
@@ -1972,6 +1973,28 @@ export default function AdminDashboard({
                     rows={2} value={galleryDescription} onChange={(e) => setGalleryDescription(e.target.value)}
                     className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl outline-none"
                   />
+                </div>
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      try {
+                        await saveSettingsDoc('gallery', {
+                          headline: galleryHeadline,
+                          subheadline: gallerySubheadline,
+                          description: galleryDescription
+                        });
+                        setSaveSuccess(true);
+                        setTimeout(() => setSaveSuccess(false), 2500);
+                      } catch (err) {
+                        console.error('Failed to save gallery settings:', err);
+                      }
+                    }}
+                    className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-black px-4 py-2.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5"
+                  >
+                    <Check className="w-3.5 h-3.5" />
+                    <span>গ্যালারি সেটিংস সংরক্ষণ করুন (Save Gallery Settings)</span>
+                  </button>
                 </div>
               </div>
 
