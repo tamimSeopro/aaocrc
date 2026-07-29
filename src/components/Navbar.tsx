@@ -1,5 +1,5 @@
 import { PageTab } from '../types';
-import { MapPin, ArrowRight, Menu, X, GraduationCap, ThumbsUp, Heart, Lock } from 'lucide-react';
+import { MapPin, Menu, X, GraduationCap, ThumbsUp, Heart, Lock } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 interface NavbarProps {
@@ -23,7 +23,6 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
     { label: 'HOME', tab: 'home' },
     { label: 'ABOUT', tab: 'about' },
     { label: 'ALUMNI MEMBER', tab: 'alumni' },
-    { label: 'MEMBERSHIP', tab: 'membership' },
     { label: 'EVENTS', tab: 'events' },
     { label: 'CONTACT', tab: 'contact' },
   ];
@@ -107,14 +106,6 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
             )}
           </span>
 
-          <button
-            onClick={() => handleNavClick('membership')}
-            className="hidden sm:flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 px-5 py-2 rounded-full font-bold text-sm shadow-md hover:shadow-lg transition-all cursor-pointer group transform hover:-translate-y-0.5"
-          >
-            <span>আবেদন করুন</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
-
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -144,7 +135,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
                 </button>
               );
             })}
-            <div className="grid grid-cols-2 gap-2 mt-3">
+            <div className="mt-3">
               <span
                 onClick={() => {
                   setLikes((prev) => prev + 1);
@@ -152,18 +143,11 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
                   setTimeout(() => setIsLiking(false), 800);
                   handleNavClick('admin');
                 }}
-                className="flex items-center justify-center gap-2 bg-slate-900 border border-slate-800 text-white px-4 py-3 rounded-xl font-bold text-xs shadow-md transition-all cursor-pointer select-none"
+                className="flex items-center justify-center gap-2 bg-slate-900 border border-slate-800 text-white px-4 py-3 rounded-xl font-bold text-xs shadow-md transition-all cursor-pointer select-none w-full"
               >
                 <ThumbsUp className={`w-3.5 h-3.5 text-amber-400 ${isLiking ? 'scale-125 text-rose-500 animate-bounce' : ''}`} />
                 <span>Rajshahi College</span>
               </span>
-              <button
-                onClick={() => handleNavClick('membership')}
-                className="flex items-center justify-center gap-2 bg-amber-500 text-slate-950 px-4 py-3 rounded-xl font-bold text-xs shadow-md"
-              >
-                <span>আবেদন করুন</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
             </div>
           </div>
         </div>

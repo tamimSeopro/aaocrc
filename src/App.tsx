@@ -31,7 +31,6 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import AlumniMember from './pages/AlumniMember';
-import Membership from './pages/Membership';
 import Events from './pages/Events';
 import Contact from './pages/Contact';
 import AdminDashboard from './pages/AdminDashboard';
@@ -401,15 +400,14 @@ export default function App() {
             applications={applications}
           />
         )}
-        {activeTab === 'membership' && (
-          <Membership
+        {activeTab === 'events' && <Events events={events} />}
+        {activeTab === 'contact' && (
+          <Contact
             applications={applications}
             onAddApplication={handleAddApplication}
             setActiveTab={setActiveTab}
           />
         )}
-        {activeTab === 'events' && <Events events={events} />}
-        {activeTab === 'contact' && <Contact />}
         {activeTab === 'admin' && (
           <AdminDashboard
             events={events}

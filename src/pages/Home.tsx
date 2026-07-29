@@ -152,7 +152,7 @@ export default function Home({
               ক্যাম্পাস গ্যালারি
             </button>
             <button
-              onClick={() => setActiveTab('membership')}
+              onClick={() => setActiveTab('contact')}
               className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 px-7 py-2.5 rounded-lg font-extrabold text-sm shadow-xl hover:scale-105 transition-all cursor-pointer border border-amber-400"
             >
               সদস্য হিসেবে যোগ দিন
@@ -659,7 +659,7 @@ export default function Home({
             </div>
 
             <button
-              onClick={() => setActiveTab('membership')}
+              onClick={() => setActiveTab('contact')}
               className="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all cursor-pointer transform hover:-translate-y-0.5"
             >
               অনলাইনে আবেদন করুন

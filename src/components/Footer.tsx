@@ -12,8 +12,8 @@ export default function Footer({ setActiveTab }: FooterProps) {
   };
 
   const quickBannerItems = [
-    { icon: Award, title: 'সদস্যপদ', tab: 'membership' as PageTab },
-    { icon: Mail, title: 'অনুসরণ করুন', tab: 'contact' as PageTab },
+    { icon: Award, title: 'সদস্যপদ', tab: 'contact' as PageTab },
+    { icon: Mail, title: 'যোগাযোগ', tab: 'contact' as PageTab },
     { icon: Calendar, title: 'সেমিনার', tab: 'events' as PageTab },
     { icon: Search, title: 'ডিরেক্টরি', tab: 'alumni' as PageTab },
   ];
@@ -98,7 +98,7 @@ export default function Footer({ setActiveTab }: FooterProps) {
           </h4>
           <ul className="space-y-2 text-xs text-slate-400 font-medium">
             <li 
-              onClick={() => { setActiveTab('membership'); scrollToTop(); }}
+              onClick={() => { setActiveTab('contact'); scrollToTop(); }}
               className="flex items-center gap-2 hover:text-amber-400 cursor-pointer transition-colors"
             >
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
@@ -119,7 +119,7 @@ export default function Footer({ setActiveTab }: FooterProps) {
               <span>সম্মানিত শিক্ষক ও কৃতি অ্যালামনাই</span>
             </li>
             <li 
-              onClick={() => { setActiveTab('membership'); scrollToTop(); }}
+              onClick={() => { setActiveTab('contact'); scrollToTop(); }}
               className="flex items-center gap-2 hover:text-amber-400 cursor-pointer transition-colors"
             >
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
