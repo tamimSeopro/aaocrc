@@ -30,13 +30,13 @@ export default function Home({
 
   const slides = [
     {
-      bg: 'https://i.postimg.cc/tTJZ489S/unnamed.webp',
+      bg: 'https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331170/unnamed_dbi26h.webp',
       badge: 'রসায়ন বিভাগ অ্যালামনাই অ্যাসোসিয়েশন',
       title: 'রসায়ন বিভাগ ও অ্যালামনাই অ্যাসোসিয়েশন, রাজশাহী কলেজ',
       subtitle: 'ঐতিহ্য ও গৌরবের সোনালী পথচলা (প্রতিষ্ঠিত ১৯০৯)'
     },
     {
-      bg: 'https://i.postimg.cc/VNd0Y3fH/ben_2.webp',
+      bg: 'https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331256/unnamed_1_qlhwlv.webp',
       badge: 'বিভাগীয় ভবন ও অ্যালামনাই কার্যালয়',
       title: 'রাজশাহী কলেজ রসায়ন ভবন ও অ্যালামনাই অ্যাসোসিয়েশন',
       subtitle: '১৪০+ বছরের ঐতিহ্যবাহী রসায়ন বিজ্ঞান পরিবার ও সেতুবন্ধন'
@@ -217,7 +217,7 @@ export default function Home({
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
             onClick={() => setSelectedImage({
-              url: "https://i.postimg.cc/tTJZ489S/unnamed.webp",
+              url: "https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331170/unnamed_dbi26h.webp",
               title: "ঐতিহাসিক রসায়ন ভবন, রাজশাহী কলেজ",
               desc: "১৯০৯ সালে স্থাপিত ঐতিহাসিক রসায়ন বিজ্ঞান ভবন ও রাজশাহী কলেজ একাডেমি ক্যাম্পাস।"
             })}
@@ -225,7 +225,7 @@ export default function Home({
           >
             <div className="relative rounded-xl overflow-hidden border border-amber-500/30 shadow-2xl bg-slate-950">
               <img 
-                src="https://i.postimg.cc/tTJZ489S/unnamed.webp" 
+                src="https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331170/unnamed_dbi26h.webp" 
                 alt="Rajshahi College Chemistry Building" 
                 loading="eager"
                 decoding="async"

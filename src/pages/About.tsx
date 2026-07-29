@@ -103,7 +103,7 @@ export default function About({ setActiveTab, executiveMembers }: AboutProps) {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             onClick={() => setSelectedImage({
-              url: "https://i.postimg.cc/tTJZ489S/unnamed.webp",
+              url: "https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331170/unnamed_dbi26h.webp",
               title: "ঐতিহাসিক রসায়ন ভবন, রাজশাহী কলেজ",
               desc: "১৯০৯ সালে স্থাপিত উপমহাদেশের অন্যতম প্রাচীন ঐতিহ্যবাহী লাল ইটের রসায়ন বিজ্ঞান ভবন।"
             })}
@@ -111,7 +111,7 @@ export default function About({ setActiveTab, executiveMembers }: AboutProps) {
           >
             <div className="relative h-72 sm:h-96 overflow-hidden bg-slate-950 flex items-center justify-center p-1">
               <img
-                src="https://i.postimg.cc/tTJZ489S/unnamed.webp"
+                src="https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331170/unnamed_dbi26h.webp"
                 alt="ঐতিহাসিক রসায়ন ভবন"
                 loading="eager"
                 decoding="async"
@@ -152,7 +152,7 @@ export default function About({ setActiveTab, executiveMembers }: AboutProps) {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
             onClick={() => setSelectedImage({
-              url: "https://i.postimg.cc/VNd0Y3fH/ben_2.webp",
+              url: "https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331256/unnamed_1_qlhwlv.webp",
               title: "রসায়ন বিভাগ ও অ্যালামনাই অ্যাসোসিয়েশন ভবন",
               desc: "প্রাক্তন ছাত্র-ছাত্রী ও শিক্ষকদের মিলনকেন্দ্র, প্রশাসনিক উইং এবং পুনর্মিলনী দপ্তর।"
             })}
@@ -160,7 +160,7 @@ export default function About({ setActiveTab, executiveMembers }: AboutProps) {
           >
             <div className="relative h-72 sm:h-96 overflow-hidden bg-slate-950 flex items-center justify-center p-1">
               <img
-                src="https://i.postimg.cc/VNd0Y3fH/ben_2.webp"
+                src="https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331256/unnamed_1_qlhwlv.webp"
                 alt="রসায়ন বিভাগ ও অ্যালামনাই অ্যাসোসিয়েশন ভবন"
                 loading="eager"
                 decoding="async"

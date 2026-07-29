@@ -336,13 +336,13 @@ export const INITIAL_APPLICATIONS: MembershipApplication[] = [
 export const INITIAL_GALLERY_SLIDES = [
   {
     id: 'slide-1',
-    url: 'https://i.postimg.cc/tTJZ489S/unnamed.webp',
+    url: 'https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331170/unnamed_dbi26h.webp',
     title: 'ঐতিহাসিক রসায়ন ভবন, রাজশাহী কলেজ',
     description: '১৯০৯ সালে স্থাপিত ঐতিহ্যবাহী রসায়ন বিজ্ঞান ভবন ও গবেষণা ক্যাম্পাস।'
   },
   {
     id: 'slide-2',
-    url: 'https://i.postimg.cc/VNd0Y3fH/ben_2.webp',
+    url: 'https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331256/unnamed_1_qlhwlv.webp',
     title: 'রসায়ন বিভাগ ও অ্যালামনাই অ্যাসোসিয়েশন ভবন',
     description: 'প্রাক্তন ও বর্তমান শিক্ষার্থী এবং শিক্ষক মণ্ডলীর মিলনকেন্দ্র।'
   },
