@@ -56,6 +56,20 @@ export default function App() {
   const [gallerySubheadline, setGallerySubheadline] = useState('ফটো গ্যালারি ও স্মৃতির কোলাজ');
   const [galleryDescription, setGalleryDescription] = useState('রসায়ন বিভাগের আধুনিক ল্যাবরেটরি, বিশেষ ক্যারিয়ার সেমিনার এবং কৃতি শিক্ষার্থীদের বর্ণিল মিলনমেলার কিছু খণ্ডচিত্র।');
 
+  // Preload critical external images for ultra-fast performance and zero loading delay
+  useEffect(() => {
+    const imagesToPreload = [
+      'https://i.postimg.cc/tTJZ489S/unnamed.webp',
+      'https://i.postimg.cc/VNd0Y3fH/ben_2.webp',
+      'https://6a3ffaa0f4f12d1dab644ce8.imgix.net/chemistry/chemistry logo.png'
+    ];
+    
+    imagesToPreload.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
   // Load Firestore Data on Mount
   useEffect(() => {
     async function loadAllData() {

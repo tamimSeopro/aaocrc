@@ -113,6 +113,9 @@ export default function About({ setActiveTab, executiveMembers }: AboutProps) {
               <img
                 src="https://i.postimg.cc/tTJZ489S/unnamed.webp"
                 alt="ঐতিহাসিক রসায়ন ভবন"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-contain sm:object-cover transform group-hover:scale-105 transition-transform duration-700"
               />
@@ -159,6 +162,9 @@ export default function About({ setActiveTab, executiveMembers }: AboutProps) {
               <img
                 src="https://i.postimg.cc/VNd0Y3fH/ben_2.webp"
                 alt="রসায়ন বিভাগ ও অ্যালামনাই অ্যাসোসিয়েশন ভবন"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-contain sm:object-cover transform group-hover:scale-105 transition-transform duration-700"
               />

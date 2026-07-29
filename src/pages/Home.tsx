@@ -120,11 +120,21 @@ export default function Home({
       </AnimatePresence>
       {/* Hero Section */}
       <section className="relative w-full h-[480px] sm:h-[540px] overflow-hidden rounded-b-2xl shadow-xl select-none bg-slate-950">
-        {/* Background Image with Dark Overlay */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center transition-all duration-700 opacity-35 scale-105"
-          style={{ backgroundImage: `url(${currentSlide.bg})` }}
-        ></div>
+        {/* Background Image with High Priority Pre-decoding */}
+        {slides.map((slide, idx) => (
+          <img
+            key={idx}
+            src={slide.bg}
+            alt={slide.title}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+            referrerPolicy="no-referrer"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out scale-105 ${
+              heroSlide === idx ? 'opacity-35 z-0' : 'opacity-0 pointer-events-none'
+            }`}
+          />
+        ))}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0b192c] via-[#0b192c]/80 to-transparent"></div>
 
         {/* Hero Content with high contrast container for readability */}
@@ -217,6 +227,9 @@ export default function Home({
               <img 
                 src="https://i.postimg.cc/tTJZ489S/unnamed.webp" 
                 alt="Rajshahi College Chemistry Building" 
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
                 className="w-full h-64 sm:h-80 object-contain sm:object-cover transform group-hover:scale-105 transition-transform duration-500"
                 referrerPolicy="no-referrer"
               />
