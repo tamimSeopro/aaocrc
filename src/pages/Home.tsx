@@ -27,6 +27,7 @@ export default function Home({
 }: HomeProps) {
   const [heroSlide, setHeroSlide] = useState(0);
   const [selectedImage, setSelectedImage] = useState<{ url: string; title: string; desc?: string } | null>(null);
+  const [selectedTeacherQuote, setSelectedTeacherQuote] = useState<TeacherQuote | null>(null);
 
   const slides = [
     {
@@ -113,6 +114,68 @@ export default function Home({
                 <p className="text-[11px] text-slate-400 pt-1">
                   💡 যেকোনো স্থান চাপ দিয়ে মোডাল বন্ধ করতে পারেন
                 </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Teacher Quote Full Speech Modal */}
+      <AnimatePresence>
+        {selectedTeacherQuote && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedTeacherQuote(null)}
+            className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md p-4 sm:p-8 flex flex-col items-center justify-center cursor-zoom-out select-none"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-2xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-5 cursor-default overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 to-amber-600"></div>
+
+              <button
+                onClick={() => setSelectedTeacherQuote(null)}
+                className="absolute top-4 right-4 z-10 bg-slate-950/80 hover:bg-amber-500 hover:text-slate-950 text-white p-2 rounded-full border border-slate-700 transition-all shadow-lg cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 border-b border-slate-800 pb-5">
+                <img
+                  src={selectedTeacherQuote.image}
+                  alt={selectedTeacherQuote.name}
+                  className="w-20 h-20 rounded-full object-cover border-2 border-amber-500/50 shadow-md shrink-0"
+                />
+                <div className="text-center sm:text-left space-y-1">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold mb-1">
+                    <span>শিক্ষকের শুভাশিস ও মুল্যায়ন</span>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-white">{selectedTeacherQuote.name}</h3>
+                  <p className="text-xs sm:text-sm text-amber-400 font-semibold">{selectedTeacherQuote.designation}</p>
+                  <p className="text-xs text-slate-400">{selectedTeacherQuote.department}</p>
+                </div>
+              </div>
+
+              <div className="space-y-3 bg-slate-950/60 p-5 rounded-xl border border-slate-800/80 max-h-[50vh] overflow-y-auto">
+                <p className="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line italic">
+                  "{selectedTeacherQuote.quote}"
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between text-xs text-slate-400 pt-1 border-t border-slate-800/60">
+                <span>💡 যেকোনো স্থানে চাপ দিলে বন্ধ হবে</span>
+                <button
+                  onClick={() => setSelectedTeacherQuote(null)}
+                  className="bg-amber-500 hover:bg-amber-600 text-slate-950 px-5 py-2 rounded-xl font-bold transition-all cursor-pointer shadow"
+                >
+                  বন্ধ করুন
+                </button>
               </div>
             </motion.div>
           </motion.div>
@@ -324,7 +387,8 @@ export default function Home({
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="bg-slate-900/60 backdrop-blur-md p-5 rounded-xl border border-slate-800/80 shadow-md hover:border-amber-500/30 transition-all flex flex-col sm:flex-row items-start gap-4 relative overflow-hidden"
+                onClick={() => setSelectedTeacherQuote(tq)}
+                className="bg-slate-900/60 backdrop-blur-md p-5 rounded-xl border border-slate-800/80 shadow-md hover:border-amber-500/50 hover:bg-slate-900/90 transition-all flex flex-col sm:flex-row items-start gap-4 relative overflow-hidden cursor-pointer group"
               >
                 {/* Orange left border strip */}
                 <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-amber-500 to-amber-600"></div>
@@ -332,17 +396,25 @@ export default function Home({
                 <img
                   src={tq.image}
                   alt={tq.name}
-                  className="w-16 h-16 rounded-full object-cover border-2 border-amber-500/30 shrink-0 ml-2"
+                  className="w-16 h-16 rounded-full object-cover border-2 border-amber-500/30 shrink-0 ml-2 group-hover:scale-105 transition-transform"
                 />
 
                 <div className="space-y-2 flex-1">
-                  <div className="text-xs sm:text-sm text-slate-300 italic leading-relaxed whitespace-pre-line">
+                  <div className="text-xs sm:text-sm text-slate-300 italic leading-relaxed line-clamp-3">
                     "{tq.quote}"
                   </div>
-                  <div className="pt-1">
-                    <h4 className="font-bold text-slate-100 text-sm">{tq.name}</h4>
-                    <p className="text-xs text-amber-400 font-semibold">{tq.designation}</p>
-                    <p className="text-[11px] text-slate-400">{tq.department}</p>
+
+                  <div className="flex items-center justify-between pt-2 border-t border-slate-800/60 mt-1">
+                    <div>
+                      <h4 className="font-bold text-slate-100 text-sm group-hover:text-amber-400 transition-colors">{tq.name}</h4>
+                      <p className="text-xs text-amber-400 font-semibold">{tq.designation}</p>
+                      <p className="text-[11px] text-slate-400">{tq.department}</p>
+                    </div>
+
+                    <div className="bg-amber-500/10 group-hover:bg-amber-500 text-amber-400 group-hover:text-slate-950 px-3 py-1.5 rounded-lg border border-amber-500/20 text-xs font-extrabold transition-all flex items-center gap-1 shrink-0">
+                      <span>সম্পূর্ণ বক্তব্য</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
                   </div>
                 </div>
               </motion.div>
