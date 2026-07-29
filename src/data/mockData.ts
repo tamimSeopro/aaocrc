@@ -336,33 +336,33 @@ export const INITIAL_APPLICATIONS: MembershipApplication[] = [
 export const INITIAL_GALLERY_SLIDES = [
   {
     id: 'slide-1',
+    url: 'https://i.postimg.cc/tTJZ489S/unnamed.webp',
+    title: 'ঐতিহাসিক রসায়ন ভবন, রাজশাহী কলেজ',
+    description: '১৯০৯ সালে স্থাপিত ঐতিহ্যবাহী রসায়ন বিজ্ঞান ভবন ও গবেষণা ক্যাম্পাস।'
+  },
+  {
+    id: 'slide-2',
+    url: 'https://i.postimg.cc/VNd0Y3fH/ben_2.webp',
+    title: 'রসায়ন বিভাগ ও অ্যালামনাই অ্যাসোসিয়েশন ভবন',
+    description: 'প্রাক্তন ও বর্তমান শিক্ষার্থী এবং শিক্ষক মণ্ডলীর মিলনকেন্দ্র।'
+  },
+  {
+    id: 'slide-3',
     url: 'https://images.unsplash.com/photo-1532187643603-ba119ca4109e?w=1000&auto=format&fit=crop&q=80',
     title: 'রসায়ন বিভাগীয় অত্যাধুনিক গবেষণাগার',
     description: 'আধুনিক রাসায়নিক বিশ্লেষণ ও সুসজ্জিত কেমিক্যাল সেটিং সমৃদ্ধ ল্যাব।'
   },
   {
-    id: 'slide-2',
+    id: 'slide-4',
     url: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=1000&auto=format&fit=crop&q=80',
     title: 'বিভাগীয় বিশেষ বৈজ্ঞানিক ও সেমিনার অধিবেশন',
     description: 'দেশ-বিদেশের স্বনামধন্য গবেষকদের নিয়ে নিয়োজিত জ্ঞানগর্ভ সেমিনার।'
   },
   {
-    id: 'slide-3',
+    id: 'slide-5',
     url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1000&auto=format&fit=crop&q=80',
     title: 'কৃতি শিক্ষার্থীদের মিলনমেলা ও সম্মাননা অনুষ্ঠান',
     description: 'সাফল্য অর্জনকারী শিক্ষার্থীদের মেধা অন্বেষণ ও কৃতি সম্মাননা প্রদানের উৎসব।'
-  },
-  {
-    id: 'slide-4',
-    url: 'https://images.unsplash.com/photo-1507668077129-56e32842fceb?w=1000&auto=format&fit=crop&q=80',
-    title: 'উন্নত থিসিস ও প্রজেক্ট ভিত্তিক কর্মশালা',
-    description: 'প্রাক্তন শিক্ষার্থীবৃন্দের সার্বিক সহায়তায় পরিচালিত হাতে-কলমে গবেষণা কার্যক্রম।'
-  },
-  {
-    id: 'slide-5',
-    url: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1000&auto=format&fit=crop&q=80',
-    title: 'ঐতিহাসিক রসায়ন বিভাগ ভবন ও বুক সেমিনার লাইব্রেরি',
-    description: '৩,০০০ এরও বেশি রসায়ন বিজ্ঞানের অমূল্য ও দুর্লভ বই সংবলিত সেমিনার।'
   }
 ];
 

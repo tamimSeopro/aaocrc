@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { MapPin, Mail, Phone, Clock, Send, CheckCircle2, Globe, Facebook, MessageSquare } from 'lucide-react';
+import { motion } from 'motion/react';
 
 export default function Contact() {
   const [name, setName] = useState('');
@@ -17,7 +18,12 @@ export default function Contact() {
   return (
     <div className="w-full space-y-16 py-10 max-w-7xl mx-auto px-6 relative z-10 select-none">
       {/* Title Header */}
-      <div className="text-center space-y-3">
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-center space-y-3"
+      >
         <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">
           সার্বক্ষণিক সরাসরি যোগাযোগ
         </span>
@@ -27,12 +33,18 @@ export default function Contact() {
         <p className="text-slate-300 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed">
           বিভাগীয় যেকোনো তথ্য, অ্যালামনাই পুনর্মিলনী নিবন্ধন বা সদস্যপদ সংক্রান্ত যেকোনো জিজ্ঞাসার জন্য আমাদের সাথে যোগাযোগ করতে পারেন।
         </p>
-      </div>
+      </motion.div>
 
       {/* Two Column Section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
         {/* Left Col: Contact Cards (w-5/12) */}
-        <div className="lg:col-span-5 space-y-6">
+        <motion.div 
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="lg:col-span-5 space-y-6"
+        >
           <div className="bg-[#0b192c]/80 backdrop-blur-md text-white p-8 rounded-2xl shadow-xl space-y-6 border border-slate-800/80 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
 
@@ -108,10 +120,16 @@ export default function Contact() {
               </a>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Right Col: Contact Message Form (w-7/12) */}
-        <div className="lg:col-span-7">
+        <motion.div 
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="lg:col-span-7"
+        >
           <div className="bg-slate-900/60 backdrop-blur-md p-8 sm:p-10 rounded-2xl border border-slate-800/80 shadow-lg space-y-6">
             <div className="flex items-center gap-3 border-b border-slate-800 pb-4">
               <div className="p-3 bg-amber-500/10 text-amber-400 rounded-xl font-bold border border-amber-500/20">
@@ -124,7 +142,11 @@ export default function Contact() {
             </div>
 
             {sent ? (
-              <div className="p-8 bg-emerald-950/40 rounded-2xl border border-emerald-800/50 text-center space-y-3 animate-in zoom-in-95">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="p-8 bg-emerald-950/40 rounded-2xl border border-emerald-800/50 text-center space-y-3"
+              >
                 <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto" />
                 <h4 className="font-bold text-white text-lg">আপনার বার্তাটি সফলভাবে পাঠানো হয়েছে!</h4>
                 <p className="text-xs text-slate-300 max-w-sm mx-auto leading-relaxed">
@@ -136,9 +158,8 @@ export default function Contact() {
                 >
                   নতুন বার্তা পাঠান
                 </button>
-              </div>
+              </motion.div>
             ) : (
-              /* All Inputs are solid opaque - fulfilling 'but not in text area' requirement */
               <form onSubmit={handleSubmit} className="space-y-4 text-xs">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -198,7 +219,7 @@ export default function Contact() {
               </form>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

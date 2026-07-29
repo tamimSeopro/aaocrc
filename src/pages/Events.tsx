@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { EventItem } from '../types';
 import { Search, Calendar, MapPin, Clock, Tag, RefreshCw, Sparkles } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface EventsProps {
   events: EventItem[];
@@ -26,7 +27,12 @@ export default function Events({ events }: EventsProps) {
   return (
     <div className="w-full space-y-12 py-10 max-w-7xl mx-auto px-6 relative z-10 select-none">
       {/* Title Header matching screenshot 7 */}
-      <div className="text-center space-y-3">
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-center space-y-3"
+      >
         <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">
           অ্যালামনাই ইভেন্ট ও নিউজ আর্কাইভ
         </span>
@@ -36,10 +42,15 @@ export default function Events({ events }: EventsProps) {
         <p className="text-slate-300 text-xs sm:text-sm max-w-3xl mx-auto leading-relaxed">
           আমাদের সর্বশেষ বৈজ্ঞানিক সেমিনার, শিক্ষামূলক ফোরাম, সাংস্কৃতিক উৎসব এবং কৃতি শিক্ষার্থীদের পুনর্মিলনীর খবরগুলো দেখে রাখুন।
         </p>
-      </div>
+      </motion.div>
 
       {/* Filter Bar matching screenshot 7 */}
-      <div className="bg-slate-900/60 backdrop-blur-md p-4 rounded-2xl border border-slate-800/80 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="bg-slate-900/60 backdrop-blur-md p-4 rounded-2xl border border-slate-800/80 shadow-md flex flex-col md:flex-row items-center justify-between gap-4"
+      >
         {/* Category Tabs */}
         <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
           <button
@@ -95,11 +106,15 @@ export default function Events({ events }: EventsProps) {
             className="w-full pl-10 pr-4 py-2.5 bg-slate-950 text-white border border-slate-800 rounded-xl text-xs outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all font-medium"
           />
         </div>
-      </div>
+      </motion.div>
 
       {/* Events Display or Empty State matching screenshot 7 */}
       {filteredEvents.length === 0 ? (
-        <div className="bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-800/80 shadow-md p-16 text-center max-w-2xl mx-auto space-y-4 my-8 animate-in zoom-in-95">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-800/80 shadow-md p-16 text-center max-w-2xl mx-auto space-y-4 my-8"
+        >
           <div className="w-16 h-16 bg-slate-950 text-slate-400 border border-slate-800 rounded-2xl flex items-center justify-center mx-auto shadow-inner animate-pulse">
             <Calendar className="w-8 h-8 text-amber-450" />
           </div>
@@ -116,13 +131,18 @@ export default function Events({ events }: EventsProps) {
             <RefreshCw className="w-3.5 h-3.5 text-amber-400" />
             <span>ফিল্টার রিসেট করুন</span>
           </button>
-        </div>
+        </motion.div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredEvents.map((ev) => (
-            <div
+          {filteredEvents.map((ev, idx) => (
+            <motion.div
               key={ev.id}
-              className="bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-800/80 overflow-hidden shadow-sm hover:border-amber-500/30 transition-all flex flex-col group transform hover:-translate-y-1"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.08 }}
+              whileHover={{ scale: 1.02 }}
+              className="bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-800/80 overflow-hidden shadow-sm hover:border-amber-500/30 transition-all flex flex-col group cursor-pointer"
             >
               {/* Event image */}
               <div className="relative h-48 overflow-hidden bg-slate-800">
@@ -171,7 +191,7 @@ export default function Events({ events }: EventsProps) {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       )}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { TeacherProfile, NotableAlumni, MembershipApplication } from '../types';
 import { Search, Mail, Phone, BookOpen, Award, ExternalLink, UserCheck, GraduationCap, Users } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface AlumniMemberProps {
   teachers: TeacherProfile[];
@@ -38,7 +39,12 @@ export default function AlumniMember({ teachers, notableAlumni, applications }: 
   return (
     <div className="w-full space-y-12 py-10 max-w-7xl mx-auto px-6 relative z-10 select-none">
       {/* Header */}
-      <div className="text-center space-y-3">
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-center space-y-3"
+      >
         <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">
           রসায়ন বিভাগীয় শিক্ষক ও অ্যালামনাই মেম্বার
         </span>
@@ -48,10 +54,15 @@ export default function AlumniMember({ teachers, notableAlumni, applications }: 
         <p className="text-slate-300 text-xs sm:text-sm max-w-3xl mx-auto leading-relaxed">
           রসায়ন বিজ্ঞানের অগ্রযাত্রায় মূল কারিগর আমাদের সুদক্ষ শিক্ষক মণ্ডলী এবং বিশ্বের রথী-মহারথী বৈজ্ঞানিক প্রতিষ্ঠানে নিয়োজিত কৃতি প্রাক্তন ছাত্র-ছাত্রীদের তালিকা নিচে তুলে ধরা হলো।
         </p>
-      </div>
+      </motion.div>
 
       {/* Controls Bar: Sub-tabs and Search */}
-      <div className="bg-slate-900/60 backdrop-blur-md p-4 rounded-2xl border border-slate-800/80 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="bg-slate-900/60 backdrop-blur-md p-4 rounded-2xl border border-slate-800/80 shadow-md flex flex-col md:flex-row items-center justify-between gap-4"
+      >
         {/* Sub Tabs */}
         <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
           <button
@@ -96,7 +107,7 @@ export default function AlumniMember({ teachers, notableAlumni, applications }: 
           </button>
         </div>
 
-        {/* Search Bar (Solid Opaque Opaque area matching "but not in text area" requirement) */}
+        {/* Search Bar */}
         <div className="relative w-full md:w-80">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
@@ -107,12 +118,18 @@ export default function AlumniMember({ teachers, notableAlumni, applications }: 
             className="w-full pl-10 pr-4 py-2.5 bg-slate-950 text-white border border-slate-800 rounded-xl text-xs outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all font-medium"
           />
         </div>
-      </div>
+      </motion.div>
 
 
       {/* Teachers Section */}
       {showTeachers && (
-        <div className="space-y-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="space-y-6"
+        >
           <div className="flex items-center gap-2 border-b border-amber-500/30 pb-3">
             <GraduationCap className="w-6 h-6 text-amber-400" />
             <h2 className="text-xl font-extrabold text-white">ডিপার্টমেন্টের শিক্ষক মণ্ডলী</h2>
@@ -124,9 +141,14 @@ export default function AlumniMember({ teachers, notableAlumni, applications }: 
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {filteredTeachers.map((t) => (
-                <div
+              {filteredTeachers.map((t, idx) => (
+                <motion.div
                   key={t.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: idx * 0.08 }}
+                  whileHover={{ scale: 1.01 }}
                   className="bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-800/80 p-5 shadow-sm hover:border-amber-500/30 transition-all flex flex-col sm:flex-row items-start gap-4 relative overflow-hidden group"
                 >
                   {/* Category badge */}
@@ -166,16 +188,22 @@ export default function AlumniMember({ teachers, notableAlumni, applications }: 
                       </p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           )}
-        </div>
+        </motion.div>
       )}
 
       {/* Alumni Section */}
       {showAlumni && (
-        <div className="space-y-6 pt-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="space-y-6 pt-6"
+        >
           <div className="flex items-center gap-2 border-b border-amber-500/30 pb-3">
             <Award className="w-6 h-6 text-amber-400" />
             <h2 className="text-xl font-extrabold text-white">বিশ্ববন্দিত কৃতি অ্যালামনাই (শিক্ষার্থীবৃন্দ)</h2>
@@ -187,9 +215,14 @@ export default function AlumniMember({ teachers, notableAlumni, applications }: 
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredAlumni.map((al) => (
-                <div
+              {filteredAlumni.map((al, idx) => (
+                <motion.div
                   key={al.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: idx * 0.08 }}
+                  whileHover={{ scale: 1.02 }}
                   className="bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-800/80 p-5 shadow-sm hover:border-amber-500/30 transition-all flex flex-col justify-between space-y-4 group"
                 >
                   <div className="space-y-3">
@@ -232,16 +265,22 @@ export default function AlumniMember({ teachers, notableAlumni, applications }: 
                       <ExternalLink className="w-3 h-3" />
                     </button>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           )}
-        </div>
+        </motion.div>
       )}
 
       {/* Registered Members Section (Shokol Shodosso) */}
       {showMembers && (
-        <div className="space-y-6 pt-6 animate-in fade-in duration-300">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="space-y-6 pt-6"
+        >
           <div className="flex items-center gap-2 border-b border-amber-500/30 pb-3">
             <UserCheck className="w-6 h-6 text-amber-400" />
             <h2 className="text-xl font-extrabold text-white">অ্যাসোসিয়েশনের নিবন্ধিত সদস্যবৃন্দ</h2>
@@ -253,9 +292,14 @@ export default function AlumniMember({ teachers, notableAlumni, applications }: 
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredMembers.map((m) => (
-                <div
+              {filteredMembers.map((m, idx) => (
+                <motion.div
                   key={m.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: idx * 0.08 }}
+                  whileHover={{ scale: 1.02 }}
                   className="bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-800/80 p-5 shadow-sm hover:border-amber-500/30 transition-all flex flex-col justify-between space-y-4 group relative overflow-hidden"
                 >
                   <div className="space-y-3">
@@ -296,11 +340,11 @@ export default function AlumniMember({ teachers, notableAlumni, applications }: 
                       <span>{m.phone}</span>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           )}
-        </div>
+        </motion.div>
       )}
     </div>
   );

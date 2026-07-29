@@ -21,9 +21,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firestore with long-polling auto-detection for reliable network connectivity in iframe/sandboxed environments
+// Initialize Firestore with force long-polling for reliable and immediate network connectivity in iframe/sandboxed environments
 export const db = initializeFirestore(app, {
-  experimentalAutoDetectLongPolling: true,
+  experimentalForceLongPolling: true,
 }, "ai-studio-alumniassociatio-76426495-8cb4-46cb-a768-623bb6e7c330");
 
 /**
