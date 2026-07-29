@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { 
-  getFirestore, 
+  initializeFirestore, 
   collection, 
   getDocs, 
   doc, 
@@ -21,8 +21,10 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firestore with the custom database ID from config
-export const db = getFirestore(app, "ai-studio-alumniassociatio-76426495-8cb4-46cb-a768-623bb6e7c330");
+// Initialize Firestore with long-polling auto-detection for reliable network connectivity in iframe/sandboxed environments
+export const db = initializeFirestore(app, {
+  experimentalAutoDetectLongPolling: true,
+}, "ai-studio-alumniassociatio-76426495-8cb4-46cb-a768-623bb6e7c330");
 
 /**
  * Fetches all documents from a Firestore collection.

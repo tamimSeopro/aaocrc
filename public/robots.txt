@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://rc-chemistry-alumni.netlify.app/sitemap.xml
+Sitemap: https://rcchealumni.netlify.app/sitemap.xml
