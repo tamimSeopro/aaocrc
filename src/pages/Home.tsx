@@ -1,8 +1,9 @@
 import { PageTab, TeacherQuote, NoticeItem, EventItem, GallerySlide } from '../types';
 import { MEMBERSHIP_PERKS } from '../data/mockData';
-import { ChevronLeft, ChevronRight, Quote, AlertCircle, Briefcase, Calendar, MapPin, CheckCircle2, ArrowRight, Maximize2, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Quote, AlertCircle, Briefcase, Calendar, MapPin, CheckCircle2, ArrowRight, Maximize2, X, Clock, Sparkles, BookOpen } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import BlogDetailView from '../components/BlogDetailView';
 
 interface HomeProps {
   setActiveTab: (tab: PageTab) => void;
@@ -28,6 +29,7 @@ export default function Home({
   const [heroSlide, setHeroSlide] = useState(0);
   const [selectedImage, setSelectedImage] = useState<{ url: string; title: string; desc?: string } | null>(null);
   const [selectedTeacherQuote, setSelectedTeacherQuote] = useState<TeacherQuote | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
 
   const slides = [
     {
@@ -181,6 +183,16 @@ export default function Home({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Full-page Blog Detail View */}
+      {selectedEvent && (
+        <BlogDetailView
+          event={selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+          allEvents={events}
+          onSelectEvent={(ev) => setSelectedEvent(ev)}
+        />
+      )}
       {/* Hero Section */}
       <section className="relative w-full h-[480px] sm:h-[540px] overflow-hidden rounded-b-2xl shadow-xl select-none bg-slate-950">
         {/* Background Image with High Priority Pre-decoding */}
@@ -520,40 +532,54 @@ export default function Home({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              onClick={() => setActiveTab('events')}
-              className="bg-slate-900/60 backdrop-blur-md rounded-xl border border-slate-800/80 overflow-hidden shadow-md hover:border-amber-500/30 hover:scale-[1.02] transition-all cursor-pointer flex flex-col group"
+              onClick={() => setSelectedEvent(ev)}
+              className="bg-slate-900/60 backdrop-blur-md rounded-xl border border-slate-800/80 overflow-hidden shadow-md hover:border-amber-500/50 hover:bg-slate-900/90 hover:scale-[1.02] transition-all cursor-pointer flex flex-col group relative"
             >
-              <div className="relative h-44 overflow-hidden bg-slate-800">
+              <div className="relative h-48 overflow-hidden bg-slate-800">
                 <img
-                  src={ev.image}
+                  src={ev.image || 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&auto=format&fit=crop&q=80'}
                   alt={ev.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 animate-fade-in"
                 />
                 {ev.badge && (
-                  <span className="absolute top-3 left-3 bg-amber-500 text-slate-950 px-3 py-1 rounded text-[11px] font-bold shadow">
-                    {ev.badge}
+                  <span className="absolute top-3 left-3 bg-amber-500 text-slate-950 px-3 py-1 rounded-md text-[11px] font-black shadow flex items-center gap-1">
+                    <Sparkles className="w-3 h-3" />
+                    <span>{ev.badge}</span>
                   </span>
                 )}
+                <span className="absolute top-3 right-3 bg-slate-950/80 backdrop-blur-sm text-white px-2.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider border border-slate-800">
+                  {ev.category === 'reunion' ? 'পুনর্মিলনী' : ev.category === 'seminar' ? 'সেমিনার' : ev.category === 'gallery' ? 'গ্যালারি' : 'ব্লগ / নিউজ'}
+                </span>
               </div>
 
               <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
                 <div className="space-y-2">
-                  <h4 className="font-bold text-white text-sm sm:text-base group-hover:text-amber-400 transition-colors">
+                  <h4 className="font-extrabold text-white text-base group-hover:text-amber-400 transition-colors leading-snug">
                     {ev.title}
                   </h4>
-                  <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-slate-300 line-clamp-3 leading-relaxed">
                     {ev.description}
                   </p>
                 </div>
 
-                <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-medium">
-                  <div className="flex items-center gap-1.5 text-amber-400">
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span>{ev.date}</span>
+                <div className="space-y-2.5 pt-3 border-t border-slate-800/80">
+                  <div className="flex items-center justify-between text-[11px] text-slate-400 font-medium">
+                    <div className="flex items-center gap-1.5 text-amber-400 font-bold">
+                      <Calendar className="w-3.5 h-3.5" />
+                      <span>{ev.date}</span>
+                    </div>
+                    {ev.location && (
+                      <div className="flex items-center gap-1.5 truncate max-w-[140px] text-slate-400">
+                        <MapPin className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                        <span className="truncate">{ev.location}</span>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex items-center gap-1.5 truncate max-w-[140px] text-slate-400">
-                    <MapPin className="w-3.5 h-3.5 text-rose-400 shrink-0" />
-                    <span className="truncate">{ev.location}</span>
+
+                  <div className="bg-amber-500/10 group-hover:bg-amber-500 text-amber-400 group-hover:text-slate-950 py-2 px-3 rounded-xl border border-amber-500/20 text-xs font-black transition-all flex items-center justify-center gap-1.5">
+                    <BookOpen className="w-3.5 h-3.5" />
+                    <span>সম্পূর্ণ ব্লগ পড়ুন</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                   </div>
                 </div>
               </div>

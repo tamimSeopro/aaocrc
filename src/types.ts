@@ -50,6 +50,7 @@ export interface EventItem {
   category: 'seminar' | 'reunion' | 'gallery' | 'news';
   description: string;
   image?: string;
+  images?: string[];
   badge?: string;
 }
 

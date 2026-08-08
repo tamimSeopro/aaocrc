@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { EventItem } from '../types';
-import { Search, Calendar, MapPin, Clock, Tag, RefreshCw, Sparkles } from 'lucide-react';
-import { motion } from 'motion/react';
+import { Search, Calendar, MapPin, Clock, Tag, RefreshCw, Sparkles, X, BookOpen, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import BlogDetailView from '../components/BlogDetailView';
 
 interface EventsProps {
   events: EventItem[];
@@ -10,6 +11,7 @@ interface EventsProps {
 export default function Events({ events }: EventsProps) {
   const [activeCategory, setActiveCategory] = useState<'all' | 'seminar' | 'gallery' | 'news'>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
 
   const filteredEvents = events.filter((ev) => {
     // category filter
@@ -26,6 +28,16 @@ export default function Events({ events }: EventsProps) {
 
   return (
     <div className="w-full space-y-12 py-10 px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10 select-none">
+      {/* Full-page Blog Detail View */}
+      {selectedEvent && (
+        <BlogDetailView
+          event={selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+          allEvents={events}
+          onSelectEvent={(ev) => setSelectedEvent(ev)}
+        />
+      )}
+
       {/* Title Header matching screenshot 7 */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
@@ -142,7 +154,8 @@ export default function Events({ events }: EventsProps) {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.08 }}
               whileHover={{ scale: 1.02 }}
-              className="bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-800/80 overflow-hidden shadow-sm hover:border-amber-500/30 transition-all flex flex-col group cursor-pointer"
+              onClick={() => setSelectedEvent(ev)}
+              className="bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-800/80 overflow-hidden shadow-sm hover:border-amber-500/50 hover:bg-slate-900/90 transition-all flex flex-col group cursor-pointer"
             >
               {/* Event image */}
               <div className="relative h-48 overflow-hidden bg-slate-800">
@@ -173,21 +186,31 @@ export default function Events({ events }: EventsProps) {
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-800/80 space-y-2 text-xs text-slate-300 font-medium">
+                <div className="pt-4 border-t border-slate-800/80 space-y-3 text-xs text-slate-300 font-medium">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 text-white font-bold">
                       <Calendar className="w-4 h-4 text-amber-400" />
                       <span>{ev.date}</span>
                     </div>
-                    <div className="flex items-center gap-1.5 text-slate-400">
-                      <Clock className="w-3.5 h-3.5 text-slate-400" />
-                      <span>{ev.time}</span>
-                    </div>
+                    {ev.time && (
+                      <div className="flex items-center gap-1.5 text-slate-400">
+                        <Clock className="w-3.5 h-3.5 text-slate-400" />
+                        <span>{ev.time}</span>
+                      </div>
+                    )}
                   </div>
 
-                  <div className="flex items-center gap-2 pt-1 text-slate-300 truncate">
-                    <MapPin className="w-4 h-4 text-rose-400 shrink-0" />
-                    <span className="truncate">{ev.location}</span>
+                  {ev.location && (
+                    <div className="flex items-center gap-2 pt-1 text-slate-300 truncate">
+                      <MapPin className="w-4 h-4 text-rose-400 shrink-0" />
+                      <span className="truncate">{ev.location}</span>
+                    </div>
+                  )}
+
+                  <div className="bg-amber-500/10 group-hover:bg-amber-500 text-amber-400 group-hover:text-slate-950 py-2 px-3 rounded-xl border border-amber-500/20 text-xs font-black transition-all flex items-center justify-center gap-1.5 pt-2">
+                    <BookOpen className="w-3.5 h-3.5" />
+                    <span>সম্পূর্ণ ব্লগ / পোস্ট পড়ুন</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                   </div>
                 </div>
               </div>

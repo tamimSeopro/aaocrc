@@ -274,6 +274,7 @@ export default function AdminDashboard({
   const [evDescription, setEvDescription] = useState('');
   const [evBadge, setEvBadge] = useState('');
   const [evImage, setEvImage] = useState('');
+  const [evImages, setEvImages] = useState<string[]>([]);
 
   // Settings State
   const [siteTitle, setSiteTitle] = useState('রসায়ন বিভাগ অ্যালামনাই অ্যাসোসিয়েশন, রাজশাহী কলেজ');
@@ -820,7 +821,8 @@ export default function AdminDashboard({
           location: evLocation || 'রসায়ন বিভাগীয় ভবন, রাজশাহী কলেজ',
           description: evDescription,
           badge: evBadge || undefined,
-          image: evImage || 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=600'
+          image: evImage || 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=600',
+          images: evImages.length > 0 ? evImages : undefined
         } : ev)
       );
       setEditingEventId(null);
@@ -834,12 +836,13 @@ export default function AdminDashboard({
         location: evLocation || 'রসায়ন বিভাগীয় ভবন, রাজশাহী কলেজ',
         description: evDescription,
         badge: evBadge || undefined,
-        image: evImage || 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=600'
+        image: evImage || 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=600',
+        images: evImages.length > 0 ? evImages : undefined
       };
       setEvents([newEv, ...events]);
     }
 
-    setEvTitle(''); setEvDate(''); setEvTime(''); setEvLocation(''); setEvDescription(''); setEvBadge(''); setEvImage('');
+    setEvTitle(''); setEvDate(''); setEvTime(''); setEvLocation(''); setEvDescription(''); setEvBadge(''); setEvImage(''); setEvImages([]);
     setSaveSuccess(true);
     setTimeout(() => {
       setSaveSuccess(false);
@@ -856,8 +859,117 @@ export default function AdminDashboard({
     setEvLocation(ev.location);
     setEvDescription(ev.description);
     setEvBadge(ev.badge || '');
-    setEvImage(ev.image);
-    setActiveSubTab('events'); // switch to editor panel if needed, or we render form in events tab itself!
+    setEvImage(ev.image || '');
+    setEvImages(ev.images || []);
+    setActiveSubTab('events');
+  };
+
+  // Multi-Image Uploader for Blog Galleries / Extra Event Photos
+  const MultiImageUploadHelper = ({
+    label,
+    images,
+    onChange
+  }: {
+    label: string;
+    images: string[];
+    onChange: (imgs: string[]) => void;
+  }) => {
+    const [urlInput, setUrlInput] = useState('');
+
+    const handleAddUrl = () => {
+      if (!urlInput.trim()) return;
+      onChange([...images, urlInput.trim()]);
+      setUrlInput('');
+    };
+
+    const handleMultipleDeviceUpload = (files: FileList | null) => {
+      if (!files || files.length === 0) return;
+      const fileArray = Array.from(files);
+      const readPromises = fileArray.map((file) => {
+        return new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            if (typeof reader.result === 'string') resolve(reader.result);
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+
+      Promise.all(readPromises).then((newResults) => {
+        onChange([...images, ...newResults]);
+      });
+    };
+
+    const handleRemoveImage = (index: number) => {
+      onChange(images.filter((_, i) => i !== index));
+    };
+
+    return (
+      <div className="space-y-2 text-xs">
+        <label className="block font-bold text-slate-300">{label}</label>
+        
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+          <input
+            type="text"
+            value={urlInput}
+            onChange={(e) => setUrlInput(e.target.value)}
+            placeholder="অতিরিক্ত ছবির URL লিংক লিখুন..."
+            className="flex-1 px-3.5 py-2.5 bg-slate-950 text-white border border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 font-medium"
+          />
+          <button
+            type="button"
+            onClick={handleAddUrl}
+            className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-4 py-2.5 rounded-xl cursor-pointer transition-all text-xs shrink-0 flex items-center justify-center gap-1"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>URL যোগ করুন</span>
+          </button>
+
+          <label className="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2.5 rounded-xl cursor-pointer border border-slate-700 flex items-center justify-center gap-1.5 transition-all text-xs shrink-0 select-none">
+            <Upload className="w-3.5 h-3.5" />
+            <span>ডিভাইস থেকে একাধিক ছবি আপলোড</span>
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              className="hidden"
+              onChange={(e) => handleMultipleDeviceUpload(e.target.files)}
+            />
+          </label>
+        </div>
+
+        {/* Gallery Thumbnails Grid */}
+        {images.length > 0 && (
+          <div className="pt-2 space-y-1.5">
+            <div className="text-[11px] font-bold text-amber-400 flex justify-between items-center">
+              <span>সংযুক্ত অতিরিক্ত ছবিসমূহ ({images.length} টি ছবি)</span>
+              <button
+                type="button"
+                onClick={() => onChange([])}
+                className="text-rose-400 hover:text-rose-300 text-[10px] cursor-pointer"
+              >
+                সবকটি মুছে ফেলুন
+              </button>
+            </div>
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+              {images.map((img, idx) => (
+                <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-slate-800 bg-slate-900 group">
+                  <img src={img} alt={`Gallery item ${idx + 1}`} className="w-full h-full object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveImage(idx)}
+                    className="absolute top-1 right-1 bg-rose-950/90 text-rose-300 hover:bg-rose-600 hover:text-white p-1 rounded-md transition-all shadow cursor-pointer opacity-80 group-hover:opacity-100"
+                    title="রিমুভ করুন"
+                  >
+                    <Trash2 className="w-3 h-3" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
   };
 
   // Dual-mode Image Upload Component (Reads Desktop Files as Base64 data urls or takes raw URLs)
@@ -2422,18 +2534,27 @@ export default function AdminDashboard({
                   </div>
 
                   <div>
-                    <label className="block font-bold text-slate-300 mb-1">বিস্তারিত বিবরণ (Description) *</label>
+                    <div className="flex justify-between items-center mb-1">
+                      <label className="block font-bold text-slate-300">বিস্তারিত বিবরণ ও সম্পূর্ণ ব্লগ টেক্সট (Full Blog Article Content) *</label>
+                      <span className="text-[10px] text-amber-400">💡 প্যারাগ্রাফ ও লাইন ব্রেক সহ বিস্তৃত আর্টিকেল পোস্ট করতে পারেন</span>
+                    </div>
                     <textarea
-                      rows={3} required value={evDescription} onChange={(e) => setEvDescription(e.target.value)}
-                      placeholder="অনুষ্ঠানের বিবরণ, স্পিকার লিস্ট ও সূচী এখানে লিখুন..."
-                      className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl outline-none"
+                      rows={8} required value={evDescription} onChange={(e) => setEvDescription(e.target.value)}
+                      placeholder="এখানে সম্পূর্ণ ব্লগ আর্টিকেলের লেখা, প্যারাগ্রাফ, স্পিকার সম্পর্কিত বিস্তারিত ও ইভেন্ট এর বিস্তারিত তথ্য লিখুন..."
+                      className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl outline-none font-sans leading-relaxed whitespace-pre-line focus:ring-1 focus:ring-amber-500"
                     />
                   </div>
 
                   <ImageUploadHelper 
-                    label="পোস্টের কভার ফটো (Cover Image URL or direct upload)"
+                    label="পোস্টের কভার ফটো (Cover Image URL or direct device upload)"
                     value={evImage}
                     onChange={setEvImage}
+                  />
+
+                  <MultiImageUploadHelper
+                    label="ব্লগ পোস্টের অতিরিক্ত অ্যালবাম ছবিসমূহ (Blog Gallery Images - Multiple device upload)"
+                    images={evImages}
+                    onChange={setEvImages}
                   />
                 </div>
 
