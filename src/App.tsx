@@ -36,9 +36,60 @@ import Contact from './pages/Contact';
 import AdminDashboard from './pages/AdminDashboard';
 import { Loader2 } from 'lucide-react';
 
+function getTabFromPath(pathname: string): PageTab {
+  const path = pathname.toLowerCase().replace(/\/$/, '');
+  if (path === '/about') return 'about';
+  if (path === '/alumni') return 'alumni';
+  if (path === '/events') return 'events';
+  if (path === '/contact' || path === '/membership') return 'contact';
+  if (path === '/admin') return 'admin';
+  return 'home';
+}
+
+function getPathFromTab(tab: PageTab): string {
+  if (tab === 'home') return '/';
+  return `/${tab}`;
+}
+
 export default function App() {
-  const [activeTab, setActiveTab] = useState<PageTab>('home');
+  const [activeTab, setActiveTabState] = useState<PageTab>(() => getTabFromPath(window.location.pathname));
   const [loading, setLoading] = useState(true);
+
+  const setActiveTab = (tab: PageTab) => {
+    setActiveTabState(tab);
+    const targetPath = getPathFromTab(tab);
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState({}, '', targetPath);
+    }
+  };
+
+  // Listen to browser Back/Forward navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      setActiveTabState(getTabFromPath(window.location.pathname));
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Sync document title and canonical tag dynamically
+  useEffect(() => {
+    const titles: Record<PageTab, string> = {
+      home: 'Alumni Association of Chemistry, Rajshahi College | রসায়ন বিভাগ অ্যালামনাই অ্যাসোসিয়েশন',
+      about: 'About Us | রসায়ন বিভাগ অ্যালামনাই অ্যাসোসিয়েশন, রাজশাহী কলেজ',
+      alumni: 'Teachers & Alumni Member Directory | রাজশাহী কলেজ রসায়ন বিভাগ অ্যালামনাই',
+      events: 'Events, Seminars & News | রাজশাহী কলেজ রসায়ন বিভাগ অ্যালামনাই',
+      contact: 'Contact & Membership Application | রসায়ন বিভাগ অ্যালামনাই অ্যাসোসিয়েশন',
+      admin: 'Admin Panel | রসায়ন বিভাগ অ্যালামনাই অ্যাসোসিয়েশন'
+    };
+    document.title = titles[activeTab] || titles.home;
+
+    let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (canonical) {
+      const path = getPathFromTab(activeTab);
+      canonical.href = `https://rcchealumni.netlify.app${path === '/' ? '' : path}`;
+    }
+  }, [activeTab]);
 
   // Dynamic States for WordPress CMS system
   const [notices, setNotices] = useState<NoticeItem[]>(INITIAL_NOTICES);
@@ -293,6 +344,11 @@ export default function App() {
     }
   };
 
+  // Auto scroll to top when changing page tabs
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [activeTab]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-slate-100 font-sans relative overflow-x-hidden">
@@ -412,9 +468,15 @@ export default function App() {
             teachers={teachers}
             notableAlumni={notableAlumni}
             applications={applications}
+            setActiveTab={setActiveTab}
           />
         )}
-        {activeTab === 'events' && <Events events={events} />}
+        {activeTab === 'events' && (
+          <Events 
+            events={events} 
+            setActiveTab={setActiveTab}
+          />
+        )}
         {activeTab === 'contact' && (
           <Contact
             applications={applications}

@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { TeacherProfile, NotableAlumni, MembershipApplication } from '../types';
-import { Search, Mail, Phone, BookOpen, Award, ExternalLink, UserCheck, GraduationCap, Users } from 'lucide-react';
+import { TeacherProfile, NotableAlumni, MembershipApplication, PageTab } from '../types';
+import { Search, Mail, Phone, BookOpen, Award, ExternalLink, UserCheck, GraduationCap, Users, ArrowRight, UserPlus, Calendar, Info } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface AlumniMemberProps {
   teachers: TeacherProfile[];
   notableAlumni: NotableAlumni[];
   applications: MembershipApplication[];
+  setActiveTab?: (tab: PageTab) => void;
 }
 
-export default function AlumniMember({ teachers, notableAlumni, applications }: AlumniMemberProps) {
+export default function AlumniMember({ teachers, notableAlumni, applications, setActiveTab }: AlumniMemberProps) {
   const [activeSubTab, setActiveSubTab] = useState<'all' | 'teachers' | 'alumni' | 'members'>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -344,6 +345,53 @@ export default function AlumniMember({ teachers, notableAlumni, applications }: 
               ))}
             </div>
           )}
+        </motion.div>
+      )}
+
+      {/* Internal Navigation Quick Links Banner */}
+      {setActiveTab && (
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="bg-[#0b192c]/80 backdrop-blur-md p-6 sm:p-8 rounded-2xl border border-amber-500/30 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 mt-8"
+        >
+          <div className="space-y-1.5 text-center md:text-left">
+            <h3 className="text-xl font-extrabold text-white">
+              আপনি কি এখনও সদস্যপদ নিবন্ধন করেননি?
+            </h3>
+            <p className="text-xs text-slate-300 max-w-xl">
+              অনলাইনে সদস্যপদ ফরম পূরণ করতে বা বিভাগের সার্বিক ইভেন্ট ও ইতিহাস জানতে নিচের লিঙ্কে চাপ দিন:
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
+            <button
+              onClick={() => setActiveTab('contact')}
+              className="bg-amber-500 hover:bg-amber-600 text-slate-950 px-5 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <UserPlus className="w-4 h-4" />
+              <span>অনলাইনে সদস্যপদ আবেদন</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => setActiveTab('events')}
+              className="bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 px-5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <Calendar className="w-4 h-4 text-amber-400" />
+              <span>ইভেন্ট ও সেমিনার হাব</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => setActiveTab('about')}
+              className="bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 px-5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <Info className="w-4 h-4 text-amber-400" />
+              <span>রসায়ন বিভাগের ইতিহাস</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </motion.div>
       )}
     </div>

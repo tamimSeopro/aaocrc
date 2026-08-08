@@ -27,6 +27,32 @@ export const db = initializeFirestore(app, {
 }, "ai-studio-alumniassociatio-76426495-8cb4-46cb-a768-623bb6e7c330");
 
 /**
+ * Recursively removes keys with `undefined` values from an object,
+ * as Firestore throws an error if any field value is `undefined`.
+ */
+export function sanitizeFirestoreData<T>(obj: T): T {
+  if (obj === null || obj === undefined) {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(item => sanitizeFirestoreData(item)) as unknown as T;
+  }
+
+  if (typeof obj === 'object') {
+    const cleaned: Record<string, any> = {};
+    for (const [key, value] of Object.entries(obj)) {
+      if (value !== undefined) {
+        cleaned[key] = sanitizeFirestoreData(value);
+      }
+    }
+    return cleaned as T;
+  }
+
+  return obj;
+}
+
+/**
  * Fetches all documents from a Firestore collection.
  * If the collection is empty, it seeds it with the provided default data.
  */
@@ -43,7 +69,8 @@ export async function getCollectionData<T extends { id: string }>(
       const batch = writeBatch(db);
       for (const item of initialData) {
         const docRef = doc(db, collectionName, item.id);
-        batch.set(docRef, item);
+        const sanitized = sanitizeFirestoreData(item);
+        batch.set(docRef, sanitized);
       }
       await batch.commit();
       return initialData;
@@ -70,7 +97,8 @@ export async function saveDocument(
 ): Promise<void> {
   try {
     const docRef = doc(db, collectionName, id);
-    await setDoc(docRef, { ...data, id });
+    const sanitized = sanitizeFirestoreData({ ...data, id });
+    await setDoc(docRef, sanitized);
   } catch (err) {
     console.error(`Error saving document ${id} to ${collectionName}:`, err);
     throw err;
@@ -123,7 +151,8 @@ export async function saveSettingsDoc(
 ): Promise<void> {
   try {
     const docRef = doc(db, "settings", docId);
-    await setDoc(docRef, data);
+    const sanitized = sanitizeFirestoreData(data);
+    await setDoc(docRef, sanitized);
   } catch (err) {
     console.error(`Error saving settings doc ${docId}:`, err);
     throw err;

@@ -42,6 +42,7 @@ import {
   UserPlus
 } from 'lucide-react';
 import { saveSettingsDoc } from '../firebase';
+import { compressImageFile } from '../lib/imageCompressor';
 
 interface AdminDashboardProps {
   events: EventItem[];
@@ -882,22 +883,14 @@ export default function AdminDashboard({
       setUrlInput('');
     };
 
-    const handleMultipleDeviceUpload = (files: FileList | null) => {
+    const handleMultipleDeviceUpload = async (files: FileList | null) => {
       if (!files || files.length === 0) return;
       const fileArray = Array.from(files);
-      const readPromises = fileArray.map((file) => {
-        return new Promise<string>((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            if (typeof reader.result === 'string') resolve(reader.result);
-          };
-          reader.readAsDataURL(file);
-        });
-      });
+      const readPromises = fileArray.map((file) => compressImageFile(file, 1000, 0.75));
 
-      Promise.all(readPromises).then((newResults) => {
-        onChange([...images, ...newResults]);
-      });
+      const newResults = await Promise.all(readPromises);
+      const validResults = newResults.filter(Boolean);
+      onChange([...images, ...validResults]);
     };
 
     const handleRemoveImage = (index: number) => {
@@ -1000,16 +993,13 @@ export default function AdminDashboard({
               type="file"
               accept="image/*"
               className="hidden"
-              onChange={(e) => {
+              onChange={async (e) => {
                 const file = e.target.files?.[0];
                 if (file) {
-                  const reader = new FileReader();
-                  reader.onloadend = () => {
-                    if (typeof reader.result === 'string') {
-                      onChange(reader.result);
-                    }
-                  };
-                  reader.readAsDataURL(file);
+                  const compressed = await compressImageFile(file, 1000, 0.75);
+                  if (compressed) {
+                    onChange(compressed);
+                  }
                 }
               }}
             />

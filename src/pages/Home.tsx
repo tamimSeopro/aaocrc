@@ -42,7 +42,7 @@ export default function Home({
       bg: 'https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331256/unnamed_1_qlhwlv.webp',
       badge: 'বিভাগীয় ভবন ও অ্যালামনাই কার্যালয়',
       title: 'রাজশাহী কলেজ রসায়ন ভবন ও অ্যালামনাই অ্যাসোসিয়েশন',
-      subtitle: '১৪০+ বছরের ঐতিহ্যবাহী রসায়ন বিজ্ঞান পরিবার ও সেতুবন্ধন'
+      subtitle: '১৫০+ বছরের ঐতিহ্যবাহী রসায়ন বিজ্ঞান পরিবার ও সেতুবন্ধন'
     },
     {
       bg: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=1600&auto=format&fit=crop&q=80',
@@ -381,14 +381,23 @@ export default function Home({
       >
         {/* Left Column: Teacher Quotes (w-7/12) */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="space-y-1">
-            <span className="text-[11px] font-bold text-amber-500 uppercase tracking-wider block">
-              শিক্ষক মণ্ডলীর মূল্যবান মতামত
-            </span>
-            <h3 className="text-xl sm:text-2xl font-extrabold text-white flex items-center gap-2">
-              <span className="text-amber-500 text-3xl">""</span>
-              <span>রসায়ন বিভাগীয় শিক্ষকদের বাণী ও মূল্যায়ন</span>
-            </h3>
+          <div className="flex items-center justify-between">
+            <div className="space-y-1">
+              <span className="text-[11px] font-bold text-amber-500 uppercase tracking-wider block">
+                শিক্ষক মণ্ডলীর মূল্যবান মতামত
+              </span>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-white flex items-center gap-2">
+                <span className="text-amber-500 text-3xl">""</span>
+                <span>রসায়ন বিভাগীয় শিক্ষকদের বাণী ও মূল্যায়ন</span>
+              </h3>
+            </div>
+            <button
+              onClick={() => setActiveTab('alumni')}
+              className="hidden sm:flex items-center gap-1.5 text-xs font-extrabold text-amber-400 hover:text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 px-3 py-1.5 rounded-lg border border-amber-500/30 transition-all cursor-pointer shrink-0"
+            >
+              <span>সকল শিক্ষক</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
           </div>
 
           <div className="space-y-4">
@@ -432,6 +441,16 @@ export default function Home({
               </motion.div>
             ))}
           </div>
+
+          <div className="pt-1 flex justify-end">
+            <button
+              onClick={() => setActiveTab('alumni')}
+              className="text-xs font-extrabold text-amber-400 hover:text-amber-300 flex items-center gap-1.5 transition-colors cursor-pointer bg-slate-900/80 px-4 py-2 rounded-xl border border-slate-800"
+            >
+              <span>সকল শিক্ষকবৃন্দ ও অ্যালামনাই তালিকা দেখুন</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
 
         {/* Right Column: Notice Board & Career Portal (w-5/12) */}
@@ -454,7 +473,7 @@ export default function Home({
               </h3>
             </div>
 
-            <div className="bg-slate-900/60 backdrop-blur-md rounded-xl border border-slate-800/80 shadow-md overflow-hidden border-t-4 border-t-rose-600">
+            <div className="bg-slate-900/60 backdrop-blur-md rounded-xl border border-slate-800/80 shadow-md overflow-hidden border-t-4 border-t-rose-600 flex flex-col justify-between">
               {notices.length === 0 ? (
                 <div className="p-8 text-center text-slate-400 text-xs sm:text-sm py-12">
                   এই মুহূর্তে কোনো সক্রিয় জরুরি নোটিশ নেই।
@@ -477,6 +496,14 @@ export default function Home({
                   ))}
                 </div>
               )}
+
+              <button
+                onClick={() => setActiveTab('events')}
+                className="w-full bg-slate-950/90 hover:bg-slate-900 text-amber-400 py-2.5 px-4 text-xs font-bold transition-colors flex items-center justify-center gap-1.5 border-t border-slate-800 cursor-pointer"
+              >
+                <span>সকল নোটিশ, ইভেন্ট ও নিউজ দেখুন</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
             </div>
           </div>
 

@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { EventItem } from '../types';
-import { Search, Calendar, MapPin, Clock, Tag, RefreshCw, Sparkles, X, BookOpen, ArrowRight } from 'lucide-react';
+import { EventItem, PageTab } from '../types';
+import { Search, Calendar, MapPin, Clock, Tag, RefreshCw, Sparkles, X, BookOpen, ArrowRight, UserPlus, Users, Info } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import BlogDetailView from '../components/BlogDetailView';
 
 interface EventsProps {
   events: EventItem[];
+  setActiveTab?: (tab: PageTab) => void;
 }
 
-export default function Events({ events }: EventsProps) {
+export default function Events({ events, setActiveTab }: EventsProps) {
   const [activeCategory, setActiveCategory] = useState<'all' | 'seminar' | 'gallery' | 'news'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
@@ -217,6 +218,53 @@ export default function Events({ events }: EventsProps) {
             </motion.div>
           ))}
         </div>
+      )}
+
+      {/* Internal Navigation Quick Links Banner */}
+      {setActiveTab && (
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="bg-[#0b192c]/80 backdrop-blur-md p-6 sm:p-8 rounded-2xl border border-amber-500/30 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 mt-8"
+        >
+          <div className="space-y-1.5 text-center md:text-left">
+            <h3 className="text-xl font-extrabold text-white">
+              আমাদের পরবর্তী সেমিনার বা ইভেন্টে অংশ নিতে চান?
+            </h3>
+            <p className="text-xs text-slate-300 max-w-xl">
+              সরাসরি যোগাযোগ করতে অথবা অ্যালামনাই মেম্বার ও শিক্ষকদের প্রোফাইল ভিজিট করতে নিচের বোতামে চাপ দিন:
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
+            <button
+              onClick={() => setActiveTab('contact')}
+              className="bg-amber-500 hover:bg-amber-600 text-slate-950 px-5 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <UserPlus className="w-4 h-4" />
+              <span>যোগাযোগ ও সদস্যপদ</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => setActiveTab('alumni')}
+              className="bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 px-5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <Users className="w-4 h-4 text-amber-400" />
+              <span>শিক্ষক ও সদস্য তালিকা</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => setActiveTab('about')}
+              className="bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 px-5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <Info className="w-4 h-4 text-amber-400" />
+              <span>বিভাগীয় পরিচিতি</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </motion.div>
       )}
     </div>
   );
