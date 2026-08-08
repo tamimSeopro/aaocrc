@@ -201,12 +201,12 @@ export default function Home({
         <div className="absolute inset-0 bg-gradient-to-t from-[#0b192c] via-[#0b192c]/80 to-transparent"></div>
 
         {/* Hero Content with high contrast container for readability */}
-        <div className="relative max-w-5xl mx-auto h-full px-6 flex flex-col items-center justify-center text-center text-white space-y-6 pt-8">
+        <div className="relative w-full px-4 sm:px-6 lg:px-12 xl:px-16 h-full flex flex-col items-center justify-center text-center text-white space-y-6 pt-8">
           <span className="bg-amber-500 text-slate-950 px-4 py-1.5 rounded-full text-xs font-bold shadow-md tracking-wider animate-bounce">
             {currentSlide.badge}
           </span>
 
-          <div className="bg-slate-950/70 backdrop-blur-md px-6 py-6 sm:py-8 sm:px-10 rounded-2xl border border-slate-800/50 shadow-2xl max-w-4xl space-y-4">
+          <div className="bg-slate-950/70 backdrop-blur-md px-6 py-6 sm:py-8 sm:px-10 rounded-2xl border border-slate-800/50 shadow-2xl w-full max-w-5xl space-y-4">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.2] drop-shadow-lg text-white">
               {currentSlide.title}
             </h1>
@@ -270,7 +270,7 @@ export default function Home({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="max-w-6xl mx-auto px-6 py-8 sm:py-12 bg-slate-900/70 backdrop-blur-md rounded-2xl border border-slate-800/80 shadow-2xl relative overflow-hidden"
+        className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 py-8 sm:py-12 bg-slate-900/70 backdrop-blur-md rounded-2xl border border-slate-800/80 shadow-2xl relative overflow-hidden"
       >
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
           {/* Animated Image Container */}
@@ -365,7 +365,7 @@ export default function Home({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+        className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
       >
         {/* Left Column: Teacher Quotes (w-7/12) */}
         <div className="lg:col-span-7 space-y-6">
@@ -501,7 +501,7 @@ export default function Home({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.6 }}
-        className="max-w-7xl mx-auto px-6 space-y-6"
+        className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 space-y-6"
       >
         <div className="text-center space-y-1">
           <span className="text-[11px] font-bold text-amber-500 uppercase tracking-wider">
@@ -568,7 +568,7 @@ export default function Home({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.6 }}
-        className="max-w-7xl mx-auto px-6 space-y-8"
+        className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 space-y-8"
       >
         <div className="text-center space-y-2">
           <span className="text-xs font-bold text-amber-500 uppercase tracking-widest block">
@@ -704,7 +704,7 @@ export default function Home({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.6 }}
-        className="max-w-7xl mx-auto px-6"
+        className="w-full px-4 sm:px-6 lg:px-12 xl:px-16"
       >
         <div className="bg-[#0b192c]/80 backdrop-blur-md rounded-2xl p-8 sm:p-12 text-white shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border border-slate-800/80">
           {/* Left info (w-7/12) */}

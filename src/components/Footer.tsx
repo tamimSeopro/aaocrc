@@ -22,7 +22,7 @@ export default function Footer({ setActiveTab }: FooterProps) {
     <footer className="w-full bg-[#0d172a] text-slate-300 relative z-10 border-t border-slate-800">
       {/* Top Gold Banner Strip */}
       <div className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-slate-950 shadow-md">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-amber-600/20">
+        <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 grid grid-cols-2 md:grid-cols-4 divide-x divide-amber-600/20">
           {quickBannerItems.map((item, idx) => {
             const Icon = item.icon;
             return (
@@ -43,7 +43,7 @@ export default function Footer({ setActiveTab }: FooterProps) {
       </div>
 
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Col 1: Brand & About */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
@@ -213,8 +213,8 @@ export default function Footer({ setActiveTab }: FooterProps) {
       </div>
 
       {/* Copyright Bar */}
-      <div className="bg-[#080e1a] px-6 py-4 border-t border-slate-800/80">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+      <div className="bg-[#080e1a] px-4 sm:px-6 lg:px-12 xl:px-16 py-4 border-t border-slate-800/80">
+        <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
           <p>
             কপিরাইট © রসায়ন অ্যালামনাই অ্যাসোসিয়েশন, রাজশাহী কলেজ ২০২৬ | সর্বস্বত্ব সংরক্ষিত।
           </p>

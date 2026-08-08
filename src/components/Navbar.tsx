@@ -36,7 +36,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
   return (
     <header className="sticky top-0 z-50 w-full shadow-lg bg-slate-950/75 backdrop-blur-md border-b border-slate-800/80">
       {/* Main Navbar */}
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 py-3 flex items-center justify-between">
         {/* Brand Logo & Title */}
         <div 
           onClick={() => handleNavClick('home')}

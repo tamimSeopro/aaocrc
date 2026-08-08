@@ -84,7 +84,7 @@ export default function Contact({ applications, onAddApplication, setActiveTab }
   };
 
   return (
-    <div className="w-full space-y-12 py-10 max-w-7xl mx-auto px-6 relative z-10 select-none">
+    <div className="w-full space-y-12 py-10 px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10 select-none">
       {/* Page Title & Header */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}

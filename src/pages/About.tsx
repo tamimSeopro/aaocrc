@@ -13,7 +13,7 @@ export default function About({ setActiveTab, executiveMembers }: AboutProps) {
   const [selectedImage, setSelectedImage] = useState<{ url: string; title: string; desc?: string } | null>(null);
 
   return (
-    <div className="w-full space-y-16 py-10 max-w-7xl mx-auto px-6 relative z-10 select-none">
+    <div className="w-full space-y-16 py-10 px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10 select-none">
       {/* Full Image Lightbox Modal */}
       <AnimatePresence>
         {selectedImage && (

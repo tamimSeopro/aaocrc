@@ -1004,7 +1004,7 @@ export default function AdminDashboard({
   }
 
   return (
-    <div className="w-full py-8 max-w-7xl mx-auto px-4 sm:px-6 relative z-10 select-none animate-in fade-in duration-300">
+    <div className="w-full py-8 px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10 select-none animate-in fade-in duration-300">
       {/* Container holding the admin dashboard splits into Sidebar + Content */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-slate-950/70 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl min-h-[700px]">
         
