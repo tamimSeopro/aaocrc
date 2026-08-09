@@ -131,7 +131,40 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Static HTML fallback for Search Engine Crawlers (Googlebot / Bingbot) -->
+      <div style="padding: 20px; font-family: sans-serif; color: #020617; background-color: #020617; min-height: 100vh;">
+        <header style="border-bottom: 1px solid #334155; padding-bottom: 16px; margin-bottom: 24px;">
+          <h1 style="color: #f59e0b; font-size: 24px; font-weight: bold; margin: 0 0 8px 0;">
+            Alumni Association of Chemistry, Rajshahi College
+          </h1>
+          <p style="color: #e2e8f0; font-size: 14px; margin: 0;">
+            রসায়ন বিভাগ অ্যালামনাই অ্যাসোসিয়েশন, রাজশাহী কলেজ (প্রতিষ্ঠিত ১৯০৯)
+          </p>
+          <nav style="margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="/" style="color: #fbbf24; text-decoration: underline; font-weight: bold;">Home (হোম)</a>
+            <a href="/about" style="color: #fbbf24; text-decoration: underline; font-weight: bold;">About Us (আমাদের সম্পর্কে)</a>
+            <a href="/alumni" style="color: #fbbf24; text-decoration: underline; font-weight: bold;">Alumni & Teachers Directory (অ্যালামনাই ও শিক্ষক)</a>
+            <a href="/events" style="color: #fbbf24; text-decoration: underline; font-weight: bold;">Events & News (ইভেন্ট ও নিউজ)</a>
+            <a href="/contact" style="color: #fbbf24; text-decoration: underline; font-weight: bold;">Contact Us (যোগাযোগ)</a>
+            <a href="/membership" style="color: #fbbf24; text-decoration: underline; font-weight: bold;">Membership Application (সদস্যপদ)</a>
+          </nav>
+        </header>
+        <main style="color: #cbd5e1; font-size: 14px; line-height: 1.6;">
+          <h2>রাজশাহী কলেজ রসায়ন বিভাগ অ্যালামনাই অ্যাসোসিয়েশনের অফিশিয়াল পোর্টাল</h2>
+          <p>
+            ১৯০৯ সালে স্থাপিত রাজশাহী কলেজের ঐতিহ্যবাহী রসায়ন বিভাগ এবং প্রাক্তন শিক্ষার্থীদের গৌরবময় মেলবন্ধন। আমাদের ওয়েবসাইটে প্রাক্তন শিক্ষার্থীদের সাথে যোগাযোগ, শিক্ষকমণ্ডলীর বাণী, নোটিশ বোর্ড, সেমিনার ও পুনর্মিলনী ইভেন্ট সমূহের বিস্তারিত তথ্য রয়েছে।
+          </p>
+          <ul>
+            <li><a href="/about" style="color: #60a5fa;">আমাদের ইতিহাস ও ঐতিহ্য (About Department History)</a></li>
+            <li><a href="/alumni" style="color: #60a5fa;">কৃতি অ্যালামনাই ও সম্মানিত শিক্ষক তালিকা (Alumni & Teacher Directory)</a></li>
+            <li><a href="/events" style="color: #60a5fa;">আগামী ইভেন্ট, সেমিনার ও গ্যালারি (Events, Seminars & Gallery)</a></li>
+            <li><a href="/membership" style="color: #60a5fa;">অনলাইন নতুন সদস্যপদ ফরম ও প্রিভিলেজ কার্ড (Membership Application)</a></li>
+            <li><a href="/contact" style="color: #60a5fa;">অ্যালামনাই কার্যালয় ও যোগাযোগ (Contact Info & Map)</a></li>
+          </ul>
+        </main>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -19,12 +19,12 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
     localStorage.setItem('aaa_likes', likes.toString());
   }, [likes]);
 
-  const navItems: { label: string; tab: PageTab }[] = [
-    { label: 'HOME', tab: 'home' },
-    { label: 'ABOUT', tab: 'about' },
-    { label: 'ALUMNI MEMBER', tab: 'alumni' },
-    { label: 'EVENTS', tab: 'events' },
-    { label: 'CONTACT', tab: 'contact' },
+  const navItems: { label: string; tab: PageTab; href: string }[] = [
+    { label: 'HOME', tab: 'home', href: '/' },
+    { label: 'ABOUT', tab: 'about', href: '/about' },
+    { label: 'ALUMNI MEMBER', tab: 'alumni', href: '/alumni' },
+    { label: 'EVENTS', tab: 'events', href: '/events' },
+    { label: 'CONTACT', tab: 'contact', href: '/contact' },
   ];
 
   const handleNavClick = (tab: PageTab) => {
@@ -38,8 +38,12 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
       {/* Main Navbar */}
       <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 py-3 flex items-center justify-between">
         {/* Brand Logo & Title */}
-        <div 
-          onClick={() => handleNavClick('home')}
+        <a 
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavClick('home');
+          }}
           className="flex items-center gap-3 cursor-pointer group select-none"
         >
           <div className="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-blue-900 via-indigo-800 to-amber-500 p-0.5 shadow-md group-hover:scale-105 transition-transform">
@@ -60,16 +64,20 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
               RAJSHAHI COLLEGE
             </span>
           </div>
-        </div>
+        </a>
 
         {/* Desktop Nav Links */}
         <nav className="hidden lg:flex items-center gap-1">
           {navItems.map((item) => {
             const isActive = activeTab === item.tab;
             return (
-              <button
+              <a
                 key={item.tab}
-                onClick={() => handleNavClick(item.tab)}
+                href={item.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(item.tab);
+                }}
                 className={`px-3 py-2 text-xs font-bold tracking-wider rounded transition-all cursor-pointer ${
                   isActive
                     ? 'bg-slate-800 text-amber-400 border border-slate-700/80 shadow-sm'
@@ -77,7 +85,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
                 }`}
               >
                 {item.label}
-              </button>
+              </a>
             );
           })}
         </nav>
@@ -124,15 +132,19 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
             {navItems.map((item) => {
               const isActive = activeTab === item.tab;
               return (
-                <button
+                <a
                   key={item.tab}
-                  onClick={() => handleNavClick(item.tab)}
-                  className={`text-left px-4 py-2.5 text-sm font-bold rounded-lg transition-colors ${
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(item.tab);
+                  }}
+                  className={`text-left px-4 py-2.5 text-sm font-bold rounded-lg transition-colors block ${
                     isActive ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'text-slate-300 hover:bg-slate-800/50'
                   }`}
                 >
                   {item.label}
-                </button>
+                </a>
               );
             })}
             <div className="mt-3">

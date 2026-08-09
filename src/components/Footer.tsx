@@ -12,10 +12,10 @@ export default function Footer({ setActiveTab }: FooterProps) {
   };
 
   const quickBannerItems = [
-    { icon: Award, title: 'সদস্যপদ', tab: 'contact' as PageTab },
-    { icon: Mail, title: 'যোগাযোগ', tab: 'contact' as PageTab },
-    { icon: Calendar, title: 'সেমিনার', tab: 'events' as PageTab },
-    { icon: Search, title: 'ডিরেক্টরি', tab: 'alumni' as PageTab },
+    { icon: Award, title: 'সদস্যপদ', tab: 'contact' as PageTab, href: '/membership' },
+    { icon: Mail, title: 'যোগাযোগ', tab: 'contact' as PageTab, href: '/contact' },
+    { icon: Calendar, title: 'সেমিনার', tab: 'events' as PageTab, href: '/events' },
+    { icon: Search, title: 'ডিরেক্টরি', tab: 'alumni' as PageTab, href: '/alumni' },
   ];
 
   return (
@@ -26,9 +26,11 @@ export default function Footer({ setActiveTab }: FooterProps) {
           {quickBannerItems.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <button
+              <a
                 key={idx}
-                onClick={() => {
+                href={item.href}
+                onClick={(e) => {
+                  e.preventDefault();
                   setActiveTab(item.tab);
                   scrollToTop();
                 }}
@@ -36,7 +38,7 @@ export default function Footer({ setActiveTab }: FooterProps) {
               >
                 <Icon className="w-5 h-5 group-hover:scale-110 transition-transform text-slate-900" />
                 <span>{item.title}</span>
-              </button>
+              </a>
             );
           })}
         </div>
@@ -91,39 +93,71 @@ export default function Footer({ setActiveTab }: FooterProps) {
           </div>
         </div>
 
-        {/* Col 2: সদস্যপদ (Membership) */}
+        {/* Col 2: অভ্যন্তরীণ নেভিগেশন ও সদস্যপদ */}
         <div className="space-y-3">
           <h4 className="text-white font-bold text-sm tracking-wider uppercase border-b border-slate-800 pb-2">
-            সদস্যপদ
+            পেইজ ও সদস্যপদ
           </h4>
           <ul className="space-y-2 text-xs text-slate-400 font-medium">
-            <li 
-              onClick={() => { setActiveTab('contact'); scrollToTop(); }}
-              className="flex items-center gap-2 hover:text-amber-400 cursor-pointer transition-colors"
-            >
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-              <span>সদস্যপদের সুবিধাসমূহ</span>
+            <li>
+              <a 
+                href="/"
+                onClick={(e) => { e.preventDefault(); setActiveTab('home'); scrollToTop(); }}
+                className="flex items-center gap-2 hover:text-amber-400 transition-colors"
+              >
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                <span>হোম পেজ</span>
+              </a>
             </li>
-            <li 
-              onClick={() => { setActiveTab('alumni'); scrollToTop(); }}
-              className="flex items-center gap-2 hover:text-amber-400 cursor-pointer transition-colors"
-            >
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-              <span>অ্যালামনাই রেজিস্ট্রি খোঁজ</span>
+            <li>
+              <a 
+                href="/about"
+                onClick={(e) => { e.preventDefault(); setActiveTab('about'); scrollToTop(); }}
+                className="flex items-center gap-2 hover:text-amber-400 transition-colors"
+              >
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                <span>আমাদের সম্পর্কে (About Us)</span>
+              </a>
             </li>
-            <li 
-              onClick={() => { setActiveTab('alumni'); scrollToTop(); }}
-              className="flex items-center gap-2 hover:text-amber-400 cursor-pointer transition-colors"
-            >
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-              <span>সম্মানিত শিক্ষক ও কৃতি অ্যালামনাই</span>
+            <li>
+              <a 
+                href="/alumni"
+                onClick={(e) => { e.preventDefault(); setActiveTab('alumni'); scrollToTop(); }}
+                className="flex items-center gap-2 hover:text-amber-400 transition-colors"
+              >
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                <span>শিক্ষক ও অ্যালামনাই তালিকা</span>
+              </a>
             </li>
-            <li 
-              onClick={() => { setActiveTab('contact'); scrollToTop(); }}
-              className="flex items-center gap-2 hover:text-amber-400 cursor-pointer transition-colors"
-            >
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-              <span>সদস্য প্রিভিলেজ ও কার্ড</span>
+            <li>
+              <a 
+                href="/events"
+                onClick={(e) => { e.preventDefault(); setActiveTab('events'); scrollToTop(); }}
+                className="flex items-center gap-2 hover:text-amber-400 transition-colors"
+              >
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                <span>ইভেন্ট, সেমিনার ও নিউজ</span>
+              </a>
+            </li>
+            <li>
+              <a 
+                href="/membership"
+                onClick={(e) => { e.preventDefault(); setActiveTab('contact'); scrollToTop(); }}
+                className="flex items-center gap-2 hover:text-amber-400 transition-colors"
+              >
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                <span>অনলাইন সদস্যপদ আবেদন</span>
+              </a>
+            </li>
+            <li>
+              <a 
+                href="/contact"
+                onClick={(e) => { e.preventDefault(); setActiveTab('contact'); scrollToTop(); }}
+                className="flex items-center gap-2 hover:text-amber-400 transition-colors"
+              >
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                <span>যোগাযোগ ও ঠিকানা</span>
+              </a>
             </li>
           </ul>
         </div>
