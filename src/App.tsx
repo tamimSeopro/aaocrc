@@ -41,7 +41,8 @@ function getTabFromPath(pathname: string): PageTab {
   if (path === '/about') return 'about';
   if (path === '/alumni') return 'alumni';
   if (path === '/events') return 'events';
-  if (path === '/contact' || path === '/membership') return 'contact';
+  if (path === '/membership') return 'membership';
+  if (path === '/contact') return 'contact';
   if (path === '/admin') return 'admin';
   return 'home';
 }
@@ -79,7 +80,8 @@ export default function App() {
       about: 'About Us | রসায়ন বিভাগ অ্যালামনাই অ্যাসোসিয়েশন, রাজশাহী কলেজ',
       alumni: 'Teachers & Alumni Member Directory | রাজশাহী কলেজ রসায়ন বিভাগ অ্যালামনাই',
       events: 'Events, Seminars & News | রাজশাহী কলেজ রসায়ন বিভাগ অ্যালামনাই',
-      contact: 'Contact & Membership Application | রসায়ন বিভাগ অ্যালামনাই অ্যাসোসিয়েশন',
+      membership: 'Online Membership Registration & Tracking | রসায়ন বিভাগ অ্যালামনাই অ্যাসোসিয়েশন',
+      contact: 'Contact Us & Department Office | রসায়ন বিভাগ অ্যালামনাই অ্যাসোসিয়েশন, রাজশাহী কলেজ',
       admin: 'Admin Panel | রসায়ন বিভাগ অ্যালামনাই অ্যাসোসিয়েশন'
     };
     document.title = titles[activeTab] || titles.home;
@@ -477,11 +479,12 @@ export default function App() {
             setActiveTab={setActiveTab}
           />
         )}
-        {activeTab === 'contact' && (
+        {(activeTab === 'contact' || activeTab === 'membership') && (
           <Contact
             applications={applications}
             onAddApplication={handleAddApplication}
             setActiveTab={setActiveTab}
+            activeTab={activeTab}
           />
         )}
         {activeTab === 'admin' && (

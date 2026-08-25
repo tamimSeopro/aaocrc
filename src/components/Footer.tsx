@@ -12,7 +12,7 @@ export default function Footer({ setActiveTab }: FooterProps) {
   };
 
   const quickBannerItems = [
-    { icon: Award, title: 'সদস্যপদ', tab: 'contact' as PageTab, href: '/membership' },
+    { icon: Award, title: 'সদস্যপদ', tab: 'membership' as PageTab, href: '/membership' },
     { icon: Mail, title: 'যোগাযোগ', tab: 'contact' as PageTab, href: '/contact' },
     { icon: Calendar, title: 'সেমিনার', tab: 'events' as PageTab, href: '/events' },
     { icon: Search, title: 'ডিরেক্টরি', tab: 'alumni' as PageTab, href: '/alumni' },
@@ -142,7 +142,7 @@ export default function Footer({ setActiveTab }: FooterProps) {
             <li>
               <a 
                 href="/membership"
-                onClick={(e) => { e.preventDefault(); setActiveTab('contact'); scrollToTop(); }}
+                onClick={(e) => { e.preventDefault(); setActiveTab('membership'); scrollToTop(); }}
                 className="flex items-center gap-2 hover:text-amber-400 transition-colors"
               >
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />

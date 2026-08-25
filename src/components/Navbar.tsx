@@ -24,6 +24,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
     { label: 'ABOUT', tab: 'about', href: '/about' },
     { label: 'ALUMNI MEMBER', tab: 'alumni', href: '/alumni' },
     { label: 'EVENTS', tab: 'events', href: '/events' },
+    { label: 'MEMBERSHIP', tab: 'membership', href: '/membership' },
     { label: 'CONTACT', tab: 'contact', href: '/contact' },
   ];
 

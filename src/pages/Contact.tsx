@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { MembershipApplication, PageTab } from '../types';
 import { MEMBERSHIP_PERKS } from '../data/mockData';
 import { 
@@ -11,10 +11,21 @@ interface ContactProps {
   applications: MembershipApplication[];
   onAddApplication: (app: MembershipApplication) => void;
   setActiveTab: (tab: PageTab) => void;
+  activeTab?: PageTab;
 }
 
-export default function Contact({ applications, onAddApplication, setActiveTab }: ContactProps) {
-  const [activeSection, setActiveSection] = useState<'membership' | 'contact'>('membership');
+export default function Contact({ applications, onAddApplication, setActiveTab, activeTab }: ContactProps) {
+  const [activeSection, setActiveSection] = useState<'membership' | 'contact'>(
+    activeTab === 'contact' ? 'contact' : 'membership'
+  );
+
+  useEffect(() => {
+    if (activeTab === 'contact') {
+      setActiveSection('contact');
+    } else if (activeTab === 'membership') {
+      setActiveSection('membership');
+    }
+  }, [activeTab]);
 
   // Contact Form state
   const [contactName, setContactName] = useState('');
@@ -93,19 +104,28 @@ export default function Contact({ applications, onAddApplication, setActiveTab }
         className="text-center space-y-3"
       >
         <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">
-          সার্বক্ষণিক যোগাযোগ ও সদস্যপদ তথ্যকেন্দ্র
+          {activeSection === 'membership' ? 'অনলাইন সদস্যপদ ও ভেরিফিকেশন' : 'বিভাগীয় যোগাযোগ ও ঠিকানা'}
         </span>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          সদস্যপদ আবেদন ও যোগাযোগ (Contact & Membership)
+          {activeSection === 'membership'
+            ? 'অনলাইন সদস্যপদ আবেদন ও ট্র্যাকিং (Membership Application)'
+            : 'বিভাগীয় যোগাযোগ ও সহায়তা (Contact & Office)'}
         </h1>
         <p className="text-slate-300 text-xs sm:text-sm max-w-3xl mx-auto leading-relaxed">
-          অনলাইনে নতুন অ্যালামনাই সদস্য পদের আবেদন করুন, আবেদনের ট্র্যাকিং যাচাই করুন, সদস্যপদ সুবিধাসমূহ জানুন অথবা বিভাগীয় অফিসে সরাসরি যোগাযোগ করুন।
+          {activeSection === 'membership'
+            ? 'অনলাইনে নতুন অ্যালামনাই সদস্য পদের আবেদন করুন, আবেদনের ট্র্যাকিং স্ট্যাটাস যাচাই করুন এবং সদস্যপদের প্রিভিলেজ সুবিধাসমূহ জানুন।'
+            : 'রাজশাহী কলেজ রসায়ন বিভাগ অ্যালামনাই অ্যাসোসিয়েশনের অফিশিয়াল কার্যালয়ের ঠিকানা, ফোন, ইমেইল এবং সরাসরি বার্তা পাঠানোর মাধ্যম।'}
         </p>
 
         {/* Section Toggle Tabs */}
         <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
-          <button
-            onClick={() => setActiveSection('membership')}
+          <a
+            href="/membership"
+            onClick={(e) => {
+              e.preventDefault();
+              setActiveSection('membership');
+              setActiveTab('membership');
+            }}
             className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs shadow-md cursor-pointer transition-all ${
               activeSection === 'membership'
                 ? 'bg-amber-500 text-slate-950 scale-105 border border-amber-400 font-extrabold'
@@ -113,11 +133,16 @@ export default function Contact({ applications, onAddApplication, setActiveTab }
             }`}
           >
             <ShieldCheck className="w-4 h-4" />
-            <span>সদস্যপদ আবেদন ও ট্র্যাকিং</span>
-          </button>
+            <span>সদস্যপদ আবেদন ও ট্র্যাকিং (/membership)</span>
+          </a>
 
-          <button
-            onClick={() => setActiveSection('contact')}
+          <a
+            href="/contact"
+            onClick={(e) => {
+              e.preventDefault();
+              setActiveSection('contact');
+              setActiveTab('contact');
+            }}
             className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs shadow-md cursor-pointer transition-all ${
               activeSection === 'contact'
                 ? 'bg-amber-500 text-slate-950 scale-105 border border-amber-400 font-extrabold'
@@ -125,16 +150,20 @@ export default function Contact({ applications, onAddApplication, setActiveTab }
             }`}
           >
             <MessageSquare className="w-4 h-4" />
-            <span>সরাসরি বার্তা ও যোগাযোগ</span>
-          </button>
+            <span>সরাসরি বার্তা ও যোগাযোগ (/contact)</span>
+          </a>
 
-          <button
-            onClick={() => setActiveTab('alumni')}
+          <a
+            href="/alumni"
+            onClick={(e) => {
+              e.preventDefault();
+              setActiveTab('alumni');
+            }}
             className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs bg-slate-900/60 backdrop-blur-md text-slate-300 border border-slate-800 hover:bg-slate-800 shadow-md cursor-pointer transition-all"
           >
             <Search className="w-4 h-4 text-amber-400" />
             <span>অ্যালামনাই ডিরেক্টরি খুঁজুন</span>
-          </button>
+          </a>
         </div>
       </motion.div>
 

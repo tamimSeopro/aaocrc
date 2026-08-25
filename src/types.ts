@@ -1,4 +1,4 @@
-export type PageTab = 'home' | 'about' | 'alumni' | 'events' | 'contact' | 'admin';
+export type PageTab = 'home' | 'about' | 'alumni' | 'events' | 'membership' | 'contact' | 'admin';
 
 export interface TeacherQuote {
   id: string;
