@@ -52,9 +52,9 @@ export default function Navbar({ activeTab, setActiveTab, theme = 'dark', onTogg
           <div className="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-blue-900 via-indigo-800 to-amber-500 p-0.5 shadow-md group-hover:scale-105 transition-transform">
             <div className="w-full h-full bg-white rounded-full flex items-center justify-center overflow-hidden border border-slate-200">
               <img 
-                src="https://6a3ffaa0f4f12d1dab644ce8.imgix.net/chemistry/chemistry logo.png" 
-                alt="Chemistry Logo" 
-                className="w-full h-full object-contain scale-[1.5]"
+                src="/logo.png" 
+                alt="Rajshahi College Logo" 
+                className="w-full h-full object-contain p-0.5"
                 referrerPolicy="no-referrer"
               />
             </div>

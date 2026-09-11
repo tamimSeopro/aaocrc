@@ -130,7 +130,7 @@ export default function App() {
     const imagesToPreload = [
       'https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331170/unnamed_dbi26h.webp',
       'https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331256/unnamed_1_qlhwlv.webp',
-      'https://6a3ffaa0f4f12d1dab644ce8.imgix.net/chemistry/chemistry logo.png'
+      '/logo.png'
     ];
     
     imagesToPreload.forEach((src) => {
@@ -432,12 +432,12 @@ export default function App() {
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-blue-400 rounded-full shadow-[0_0_15px_#60a5fa] animate-pulse"></div>
             </div>
 
-            {/* Nucleus (Chemistry Logo) */}
+            {/* Nucleus (Rajshahi College Logo) */}
             <div className="absolute w-22 h-22 rounded-full bg-white flex items-center justify-center border border-slate-200 shadow-2xl overflow-hidden z-20">
               <img 
-                src="https://6a3ffaa0f4f12d1dab644ce8.imgix.net/chemistry/chemistry logo.png" 
-                alt="Chemistry Logo" 
-                className="w-full h-full object-contain scale-[1.5] animate-[nucleus-pulse_3s_ease-in-out_infinite]"
+                src="/logo.png" 
+                alt="Rajshahi College Logo" 
+                className="w-full h-full object-contain p-1 animate-[nucleus-pulse_3s_ease-in-out_infinite]"
                 referrerPolicy="no-referrer"
               />
             </div>

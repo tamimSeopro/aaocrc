@@ -51,9 +51,9 @@ export default function Footer({ setActiveTab }: FooterProps) {
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow overflow-hidden border border-slate-200">
               <img 
-                src="https://6a3ffaa0f4f12d1dab644ce8.imgix.net/chemistry/chemistry logo.png" 
-                alt="Chemistry Logo" 
-                className="w-full h-full object-contain scale-[1.5]"
+                src="/logo.png" 
+                alt="Rajshahi College Logo" 
+                className="w-full h-full object-contain p-0.5"
                 referrerPolicy="no-referrer"
               />
             </div>
