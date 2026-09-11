@@ -1,1 +1,258 @@
 @import "tailwindcss";
+
+/* =========================================================
+   Clean White / Light Theme Styles for All Pages
+   Activated when data-theme="light" or .light-mode is applied
+   ========================================================= */
+
+.light-mode {
+  color-scheme: light;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+/* Page containers & wrappers */
+.light-mode.bg-slate-950,
+.light-mode .bg-slate-950:not(.hero-slide-bg):not(img):not(.keep-dark):not(.modal-backdrop) {
+  background-color: #ffffff !important;
+}
+
+/* Header & Navbar */
+.light-mode header,
+.light-mode header.bg-slate-950\/75,
+.light-mode header.bg-slate-950\/90 {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.light-mode header h1 {
+  color: #0f172a !important;
+}
+
+.light-mode header nav a {
+  color: #334155 !important;
+}
+
+.light-mode header nav a:hover {
+  color: #0f172a !important;
+  background-color: #f1f5f9 !important;
+}
+
+.light-mode header nav a.bg-slate-800 {
+  background-color: #fef3c7 !important;
+  color: #92400e !important;
+  border-color: #fcd34d !important;
+}
+
+.light-mode header .lg\:hidden {
+  color: #334155 !important;
+}
+
+/* Mobile Drawer */
+.light-mode header .lg\:hidden[class*="bg-slate-950"],
+.light-mode header div[class*="bg-slate-950"] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+.light-mode header div[class*="bg-slate-950"] a {
+  color: #334155 !important;
+}
+
+.light-mode header div[class*="bg-slate-950"] a:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* Cards & Sections Across All Pages (Home, About, Alumni, Events, Contact, Admin) */
+.light-mode .bg-slate-900,
+.light-mode .bg-slate-900\/70,
+.light-mode .bg-slate-900\/60,
+.light-mode .bg-slate-900\/80,
+.light-mode .bg-slate-900\/90,
+.light-mode .bg-slate-900\/95,
+.light-mode .bg-\[\#0b192c\],
+.light-mode .bg-\[\#0b192c\]\/80,
+.light-mode .bg-\[\#13233c\]\/85 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Inset containers, secondary cards, wells, and inner sub-boxes */
+.light-mode .bg-slate-950\/60,
+.light-mode .bg-slate-950\/70,
+.light-mode .bg-slate-950\/80,
+.light-mode .bg-slate-800,
+.light-mode .bg-slate-800\/40,
+.light-mode .bg-slate-800\/50,
+.light-mode .bg-slate-800\/60,
+.light-mode .bg-slate-800\/80 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Hero Section overlay in Light Mode */
+.light-mode section.relative .bg-gradient-to-t {
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.6) 45%, transparent 100%) !important;
+}
+
+.light-mode section.relative .bg-slate-950\/70 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.light-mode section.relative .bg-slate-950\/70 h1 {
+  color: #0f172a !important;
+}
+
+/* Borders */
+.light-mode .border-slate-800,
+.light-mode .border-slate-800\/80,
+.light-mode .border-slate-800\/60,
+.light-mode .border-slate-800\/50,
+.light-mode .border-slate-700,
+.light-mode .border-slate-700\/80 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Headings & Text */
+.light-mode h1,
+.light-mode h2,
+.light-mode h3,
+.light-mode h4,
+.light-mode h5,
+.light-mode h6 {
+  color: #0f172a !important;
+}
+
+.light-mode .text-white:not(button *):not(button):not(a.bg-blue-600 *):not(a.bg-emerald-600 *):not(a.bg-rose-600 *):not(button.bg-blue-600 *):not(button.bg-emerald-600 *):not(button.bg-rose-600 *):not(button.bg-amber-500 *):not(span.bg-emerald-600 *):not(span.bg-blue-600 *):not(span.bg-rose-600 *):not(.keep-white) {
+  color: #0f172a !important;
+}
+
+.light-mode .text-slate-100,
+.light-mode .text-slate-200,
+.light-mode .text-slate-300 {
+  color: #334155 !important;
+}
+
+.light-mode .text-slate-400,
+.light-mode .text-slate-500 {
+  color: #64748b !important;
+}
+
+/* Amber text - slightly deeper amber for high contrast on white backgrounds */
+.light-mode .text-amber-400 {
+  color: #d97706 !important;
+}
+
+/* Badges */
+.light-mode .bg-amber-500\/10 {
+  background-color: #fef3c7 !important;
+  color: #92400e !important;
+  border-color: #fcd34d !important;
+}
+
+.light-mode .bg-amber-500\/20 {
+  background-color: #fde68a !important;
+  color: #78350f !important;
+  border-color: #f59e0b !important;
+}
+
+/* Inputs, Textareas, Selects */
+.light-mode input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+.light-mode textarea,
+.light-mode select {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+.light-mode input::placeholder,
+.light-mode textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+.light-mode input:focus,
+.light-mode textarea:focus,
+.light-mode select:focus {
+  border-color: #f59e0b !important;
+  outline: 2px solid #fde68a !important;
+}
+
+/* Footer in Light Mode */
+.light-mode footer,
+.light-mode footer.bg-\[\#0d172a\] {
+  background-color: #f8fafc !important;
+  color: #334155 !important;
+  border-top: 1px solid #e2e8f0 !important;
+}
+
+.light-mode footer .bg-\[\#080e1a\] {
+  background-color: #f1f5f9 !important;
+  border-top: 1px solid #e2e8f0 !important;
+}
+
+.light-mode footer a {
+  color: #475569 !important;
+}
+
+.light-mode footer a:hover {
+  color: #d97706 !important;
+}
+
+.light-mode footer h3,
+.light-mode footer h4 {
+  color: #0f172a !important;
+}
+
+.light-mode footer p {
+  color: #475569 !important;
+}
+
+/* Secondary Buttons and Tags */
+.light-mode button.bg-slate-900,
+.light-mode button.bg-slate-900\/90,
+.light-mode span.bg-slate-900\/90 {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+.light-mode button.bg-slate-900:hover,
+.light-mode button.bg-slate-900\/90:hover,
+.light-mode span.bg-slate-900\/90:hover {
+  background-color: #e2e8f0 !important;
+}
+
+.light-mode .text-slate-950 {
+  color: #020617 !important;
+}
+
+/* Admin Dashboard Specific Enhancements in Light Mode */
+.light-mode .divide-slate-800 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #e2e8f0 !important;
+}
+
+.light-mode table {
+  background-color: #ffffff !important;
+}
+
+.light-mode table thead tr {
+  background-color: #f8fafc !important;
+}
+
+.light-mode table tbody tr:hover {
+  background-color: #f8fafc !important;
+}
+
+.light-mode table th {
+  color: #334155 !important;
+}
+
+.light-mode table td {
+  color: #1e293b !important;
+}
+

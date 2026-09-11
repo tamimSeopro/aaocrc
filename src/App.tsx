@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { PageTab, NoticeItem, EventItem, MembershipApplication, TeacherProfile, NotableAlumni, GallerySlide, TeacherQuote, ExecutiveMember } from './types';
+import { PageTab, ThemeMode, NoticeItem, EventItem, MembershipApplication, TeacherProfile, NotableAlumni, GallerySlide, TeacherQuote, ExecutiveMember } from './types';
 import { 
   TEACHER_QUOTES, 
   INITIAL_NOTICES, 
@@ -24,7 +24,6 @@ import {
   saveSettingsDoc 
 } from './firebase';
 
-import BackgroundAtoms from './components/BackgroundAtoms';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -55,6 +54,23 @@ function getPathFromTab(tab: PageTab): string {
 export default function App() {
   const [activeTab, setActiveTabState] = useState<PageTab>(() => getTabFromPath(window.location.pathname));
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState<ThemeMode>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('theme_mode');
+      if (saved === 'light' || saved === 'dark') return saved;
+    }
+    return 'dark';
+  });
+
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      const next: ThemeMode = prev === 'dark' ? 'light' : 'dark';
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('theme_mode', next);
+      }
+      return next;
+    });
+  };
 
   const setActiveTab = (tab: PageTab) => {
     setActiveTabState(tab);
@@ -161,7 +177,14 @@ export default function App() {
         setNotableAlumni(fbNotableAlumni);
         setTeacherQuotes(fbTeacherQuotes);
         setExecutiveMembers(fbExecutiveMembers);
-        setGallerySlides(fbGallerySlides);
+        const sanitizedSlides = fbGallerySlides.map(slide => {
+          if (slide.url && slide.url.includes('postimg.cc')) {
+            if (slide.id === 'slide-1') return { ...slide, url: 'https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331170/unnamed_dbi26h.webp' };
+            if (slide.id === 'slide-2') return { ...slide, url: 'https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331256/unnamed_1_qlhwlv.webp' };
+          }
+          return slide;
+        });
+        setGallerySlides(sanitizedSlides);
         setGalleryHeadline(fbGallerySettings.headline);
         setGallerySubheadline(fbGallerySettings.subheadline);
         setGalleryDescription(fbGallerySettings.description);
@@ -354,7 +377,6 @@ export default function App() {
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-slate-100 font-sans relative overflow-x-hidden">
-        <BackgroundAtoms />
         <style>{`
           @keyframes orbit-rotate-1 {
             0% { transform: rotateX(72deg) rotateY(15deg) rotateZ(0deg); }
@@ -435,14 +457,16 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-transparent text-slate-100 flex flex-col justify-between font-sans relative overflow-x-hidden selection:bg-amber-500 selection:text-slate-950">
-      {/* Floating chemistry symbols background */}
-      <BackgroundAtoms />
-
+    <div 
+      data-theme={theme}
+      className={`min-h-screen ${theme === 'light' ? 'light-mode bg-white text-slate-900' : 'dark-mode bg-slate-950 text-slate-100'} flex flex-col justify-between font-sans relative overflow-x-hidden selection:bg-amber-500 selection:text-slate-950 transition-colors duration-200`}
+    >
       {/* Main sticky top header */}
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
       {/* Page Views routed by tab matching exact screenshot layouts */}

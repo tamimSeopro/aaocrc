@@ -1,4 +1,5 @@
 export type PageTab = 'home' | 'about' | 'alumni' | 'events' | 'membership' | 'contact' | 'admin';
+export type ThemeMode = 'dark' | 'light';
 
 export interface TeacherQuote {
   id: string;

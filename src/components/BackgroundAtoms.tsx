@@ -22,8 +22,14 @@ interface ParticleNode {
   alpha: number;
 }
 
-export default function BackgroundAtoms() {
+interface BackgroundAtomsProps {
+  theme?: 'dark' | 'light';
+}
+
+export default function BackgroundAtoms({ theme = 'dark' }: BackgroundAtomsProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const themeRef = useRef(theme);
+  themeRef.current = theme;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -314,16 +320,17 @@ export default function BackgroundAtoms() {
         }
 
         // Draw Main Atom Body Circle
+        const isLight = themeRef.current === 'light';
         ctx.beginPath();
         ctx.arc(a.x, a.y, a.radius, 0, Math.PI * 2);
-        ctx.fillStyle = a.bgColor;
+        ctx.fillStyle = isLight ? 'rgba(255, 255, 255, 0.92)' : a.bgColor;
         ctx.fill();
         ctx.strokeStyle = a.borderColor;
-        ctx.lineWidth = 2;
+        ctx.lineWidth = isLight ? 2.5 : 2;
         ctx.stroke();
 
         // Draw Atom Symbol Text
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = isLight ? '#0f172a' : '#ffffff';
         ctx.font = `bold ${Math.floor(a.radius * 0.85)}px sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';

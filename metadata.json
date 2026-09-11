@@ -1,6 +1,6 @@
 {
-  "name": "Alumni Association of Chemistry, Rajshahi College",
-  "description": "Official portal and alumni network for the Department of Chemistry, Rajshahi College (Established 1909). Featuring alumni directory, teacher profiles, membership tracking, events, and career portal.",
+  "name": "Rajshahi College Chemistry Dept Alumni Association",
+  "description": "The Department of Chemistry, Rajshahi College began its journey in 1958. Throughout these long years, the department has been providing quality chemistry education at the Honours and Master's degree levels and has produced a large number of skilled chemists for the nation.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -646,7 +646,7 @@ export default function Home({
             onMouseLeave={() => setIsPlaying(true)}
           >
             {/* Main Slide Screen */}
-            <div className="relative h-[280px] sm:h-[450px] rounded-xl overflow-hidden bg-slate-950">
+            <div className="relative h-[300px] sm:h-[480px] rounded-xl overflow-hidden bg-slate-950 flex items-center justify-center">
               {/* Slide Images */}
               {gallerySlides.map((slide, idx) => (
               <div
@@ -660,16 +660,31 @@ export default function Home({
                 {/* Background image */}
                 <div 
                   onClick={() => setSelectedImage({ url: slide.url, title: slide.title, desc: slide.description })}
-                  className="w-full h-full cursor-pointer relative group/img"
+                  className="w-full h-full cursor-pointer relative group/img flex items-center justify-center overflow-hidden"
                 >
+                  {/* Subtle blurred backdrop so the frame is filled naturally while the foreground shows the 100% full uncropped image */}
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center filter blur-xl scale-110 opacity-25 select-none pointer-events-none"
+                    style={{ backgroundImage: `url(${slide.url})` }}
+                  />
                   <img
                     src={slide.url}
                     alt={slide.title}
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-contain sm:object-cover select-none"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.src.includes('cloudinary')) {
+                        target.src = idx === 0 
+                          ? 'https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331170/unnamed_dbi26h.webp'
+                          : idx === 1
+                          ? 'https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331256/unnamed_1_qlhwlv.webp'
+                          : 'https://images.unsplash.com/photo-1532187643603-ba119ca4109e?w=1000&auto=format&fit=crop&q=80';
+                      }
+                    }}
+                    className="w-full h-full object-contain select-none relative z-10"
                   />
-                  {/* Visual gradient overlay for text readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/45 to-transparent"></div>
+                  {/* Visual gradient overlay only at the bottom for text readability */}
+                  <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent z-10 pointer-events-none"></div>
                   
                   {/* Maximize Icon */}
                   <div className="absolute top-4 right-4 bg-slate-950/80 hover:bg-amber-500 text-white hover:text-slate-950 p-2 rounded-xl backdrop-blur-md border border-slate-800 transition-all opacity-90 group-hover/img:opacity-100 flex items-center gap-1.5 text-xs font-bold z-20">
@@ -741,6 +756,16 @@ export default function Home({
                     src={slide.url}
                     alt={slide.title}
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.src.includes('cloudinary')) {
+                        target.src = idx === 0 
+                          ? 'https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331170/unnamed_dbi26h.webp'
+                          : idx === 1
+                          ? 'https://res.cloudinary.com/ydwdvzyo/image/upload/v1785331256/unnamed_1_qlhwlv.webp'
+                          : 'https://images.unsplash.com/photo-1532187643603-ba119ca4109e?w=1000&auto=format&fit=crop&q=80';
+                      }
+                    }}
                     className="w-full h-full object-cover select-none"
                   />
                   <div className="absolute inset-0 bg-slate-950/20"></div>

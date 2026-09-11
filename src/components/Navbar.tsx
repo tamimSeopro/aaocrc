@@ -1,13 +1,15 @@
-import { PageTab } from '../types';
-import { MapPin, Menu, X, GraduationCap, ThumbsUp, Heart, Lock } from 'lucide-react';
+import { PageTab, ThemeMode } from '../types';
+import { MapPin, Menu, X, GraduationCap, ThumbsUp, Heart, Lock, Sun, Moon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 interface NavbarProps {
   activeTab: PageTab;
   setActiveTab: (tab: PageTab) => void;
+  theme?: ThemeMode;
+  onToggleTheme?: () => void;
 }
 
-export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
+export default function Navbar({ activeTab, setActiveTab, theme = 'dark', onToggleTheme }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [likes, setLikes] = useState(() => {
     const saved = localStorage.getItem('aaa_likes');
@@ -92,7 +94,32 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
         </nav>
 
         {/* CTA Button & Mobile Toggle */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Theme Toggle Switch (Dark / White Mode Option) */}
+          <button
+            type="button"
+            onClick={onToggleTheme}
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-full font-bold text-xs shadow-md transition-all cursor-pointer border select-none ${
+              theme === 'light'
+                ? 'bg-amber-100 hover:bg-amber-200 text-amber-900 border-amber-300 shadow-amber-200/50'
+                : 'bg-slate-900/90 hover:bg-slate-800 text-amber-400 border-slate-800 hover:border-amber-500/50'
+            }`}
+            title={theme === 'light' ? 'ডার্ক মোডে পরিবর্তন করুন (Switch to Dark)' : 'হোয়াইট ব্যাকগ্রাউন্ড মোড (Switch to White Mode)'}
+            aria-label="Theme toggle switch"
+          >
+            {theme === 'light' ? (
+              <>
+                <Moon className="w-3.5 h-3.5 text-indigo-700 fill-indigo-200" />
+                <span className="hidden md:inline">ডার্ক মোড</span>
+              </>
+            ) : (
+              <>
+                <Sun className="w-3.5 h-3.5 text-amber-400 animate-spin-slow" />
+                <span className="hidden md:inline">হোয়াইট মোড</span>
+              </>
+            )}
+          </button>
+
           {/* Like & Admin CTA Button */}
           <span
             onClick={() => {
@@ -101,7 +128,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
               setTimeout(() => setIsLiking(false), 800);
               handleNavClick('admin');
             }}
-            className={`flex items-center gap-1.5 bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/50 text-slate-100 px-4 py-2 rounded-full font-bold text-xs shadow-md transition-all cursor-pointer relative overflow-hidden select-none ${
+            className={`flex items-center gap-1.5 bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/50 text-slate-100 px-3 sm:px-4 py-2 rounded-full font-bold text-xs shadow-md transition-all cursor-pointer relative overflow-hidden select-none ${
               isLiking ? 'scale-105 border-amber-500 shadow-amber-500/20' : ''
             }`}
             title="Like this page & access Admin Dashboard"
@@ -109,7 +136,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
             <ThumbsUp className={`w-3.5 h-3.5 text-amber-400 transition-transform ${
               isLiking ? 'scale-125 animate-bounce text-rose-500' : 'group-hover:scale-110'
             }`} />
-            <span>Rajshahi College</span>
+            <span className="hidden xs:inline">Rajshahi College</span>
             {isLiking && (
               <span className="absolute inset-0 bg-amber-500/10 animate-ping rounded-full pointer-events-none"></span>
             )}
@@ -148,7 +175,33 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
                 </a>
               );
             })}
-            <div className="mt-3">
+            
+            {/* Theme Toggle in Mobile Menu */}
+            <div className="mt-3 pt-3 border-t border-slate-800/80 flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  if (onToggleTheme) onToggleTheme();
+                }}
+                className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs shadow-md border transition-all cursor-pointer ${
+                  theme === 'light'
+                    ? 'bg-amber-100 hover:bg-amber-200 text-amber-900 border-amber-300'
+                    : 'bg-slate-900 text-amber-400 border-slate-800 hover:border-amber-500/50'
+                }`}
+              >
+                {theme === 'light' ? (
+                  <>
+                    <Moon className="w-4 h-4 text-indigo-700" />
+                    <span>ডার্ক মোডে পরিবর্তন করুন (Dark Mode)</span>
+                  </>
+                ) : (
+                  <>
+                    <Sun className="w-4 h-4 text-amber-400" />
+                    <span>হোয়াইট ব্যাকগ্রাউন্ড মোড (White Mode)</span>
+                  </>
+                )}
+              </button>
+
               <span
                 onClick={() => {
                   setLikes((prev) => prev + 1);
@@ -156,10 +209,10 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
                   setTimeout(() => setIsLiking(false), 800);
                   handleNavClick('admin');
                 }}
-                className="flex items-center justify-center gap-2 bg-slate-900 border border-slate-800 text-white px-4 py-3 rounded-xl font-bold text-xs shadow-md transition-all cursor-pointer select-none w-full"
+                className="flex items-center justify-center gap-2 bg-slate-900 border border-slate-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all cursor-pointer select-none w-full"
               >
                 <ThumbsUp className={`w-3.5 h-3.5 text-amber-400 ${isLiking ? 'scale-125 text-rose-500 animate-bounce' : ''}`} />
-                <span>Rajshahi College</span>
+                <span>Rajshahi College (অ্যাডমিন ড্যাশবোর্ড)</span>
               </span>
             </div>
           </div>
