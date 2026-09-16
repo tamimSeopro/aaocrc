@@ -1,6 +1,6 @@
 import { PageTab, TeacherQuote, NoticeItem, EventItem, GallerySlide } from '../types';
 import { MEMBERSHIP_PERKS } from '../data/mockData';
-import { ChevronLeft, ChevronRight, Quote, AlertCircle, Briefcase, Calendar, MapPin, CheckCircle2, ArrowRight, Maximize2, X, Clock, Sparkles, BookOpen } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Quote, AlertCircle, Briefcase, Calendar, MapPin, CheckCircle2, ArrowRight, Maximize2, X, Clock, Sparkles, BookOpen, ZoomIn, ZoomOut, ExternalLink } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import BlogDetailView from '../components/BlogDetailView';
@@ -28,6 +28,7 @@ export default function Home({
 }: HomeProps) {
   const [heroSlide, setHeroSlide] = useState(0);
   const [selectedImage, setSelectedImage] = useState<{ url: string; title: string; desc?: string } | null>(null);
+  const [isZoomed, setIsZoomed] = useState(false);
   const [selectedTeacherQuote, setSelectedTeacherQuote] = useState<TeacherQuote | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
 
@@ -76,46 +77,112 @@ export default function Home({
   return (
     <div className="w-full space-y-16 pb-12 relative z-10">
       {/* Lightbox Modal for Full Image View */}
+      {/* Expansive Full Image Lightbox Modal */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setSelectedImage(null)}
-            className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md p-4 sm:p-8 flex flex-col items-center justify-center cursor-zoom-out"
+            onClick={() => {
+              setSelectedImage(null);
+              setIsZoomed(false);
+            }}
+            className="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-md p-2 sm:p-4 lg:p-6 flex flex-col items-center justify-center cursor-zoom-out"
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.94, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+              exit={{ scale: 0.94, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-5xl w-full max-h-[90vh] bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col shadow-2xl cursor-default"
+              className="relative max-w-7xl w-full h-[94vh] max-h-[96vh] bg-slate-900 border border-slate-700/80 rounded-2xl overflow-hidden flex flex-col shadow-2xl cursor-default"
             >
-              <button
-                onClick={() => setSelectedImage(null)}
-                className="absolute top-4 right-4 z-10 bg-slate-950/80 hover:bg-amber-500 hover:text-slate-950 text-white p-2 rounded-full border border-slate-700 transition-all shadow-lg"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              {/* Header Action Toolbar */}
+              <div className="px-4 py-3 bg-slate-950/90 border-b border-slate-800 flex items-center justify-between gap-3 z-10">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400 shrink-0"></span>
+                  <h3 className="text-sm sm:text-base font-bold text-white truncate">
+                    {selectedImage.title}
+                  </h3>
+                </div>
 
-              <div className="w-full h-full max-h-[75vh] bg-black/60 flex items-center justify-center p-2 overflow-hidden">
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setIsZoomed(!isZoomed)}
+                    className="bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-slate-200 px-3 py-1.5 rounded-xl border border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                    title={isZoomed ? "স্বাভাবিক আকারে আনুন" : "১০০% বড় করে দেখুন"}
+                  >
+                    {isZoomed ? (
+                      <>
+                        <ZoomOut className="w-4 h-4" />
+                        <span className="hidden sm:inline">ফিট স্ক্রিন</span>
+                      </>
+                    ) : (
+                      <>
+                        <ZoomIn className="w-4 h-4" />
+                        <span className="hidden sm:inline">১০০% বড় করুন</span>
+                      </>
+                    )}
+                  </button>
+
+                  <a
+                    href={selectedImage.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-xl border border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm"
+                    title="আসল ছবি নতুন ট্যাবে খুলুন"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">আসল রেজোলিউশন</span>
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedImage(null);
+                      setIsZoomed(false);
+                    }}
+                    className="bg-slate-800 hover:bg-rose-500 text-slate-200 hover:text-white p-2 rounded-xl border border-slate-700 transition-all shadow-sm cursor-pointer"
+                    title="বন্ধ করুন (Esc)"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Large Image Stage */}
+              <div
+                className={`w-full flex-1 bg-black/85 flex items-center justify-center p-2 sm:p-4 overflow-auto transition-all ${
+                  isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'
+                }`}
+                onClick={() => setIsZoomed(!isZoomed)}
+              >
                 <img
                   src={selectedImage.url}
                   alt={selectedImage.title}
                   referrerPolicy="no-referrer"
-                  className="max-w-full max-h-[72vh] object-contain rounded-lg shadow-2xl"
+                  className={`rounded-xl transition-all duration-300 shadow-2xl select-none ${
+                    isZoomed
+                      ? 'max-w-none w-auto h-auto min-w-[130%]'
+                      : 'max-w-full max-h-[75vh] w-auto h-auto object-contain'
+                  }`}
                 />
               </div>
 
-              <div className="p-4 sm:p-6 bg-slate-900 border-t border-slate-800 space-y-1">
-                <h3 className="text-lg sm:text-xl font-bold text-amber-400">{selectedImage.title}</h3>
-                {selectedImage.desc && (
-                  <p className="text-xs sm:text-sm text-slate-300">{selectedImage.desc}</p>
-                )}
-                <p className="text-[11px] text-slate-400 pt-1">
-                  💡 যেকোনো স্থান চাপ দিয়ে মোডাল বন্ধ করতে পারেন
-                </p>
+              {/* Caption Footer */}
+              <div className="px-4 py-3 bg-slate-900 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+                <div className="space-y-0.5">
+                  <p className="text-slate-200 font-medium">{selectedImage.desc || selectedImage.title}</p>
+                  <p className="text-[11px] text-slate-400">
+                    💡 ছবিতে ক্লিক করে আরও বড় করতে পারেন অথবা কীবোর্ডের Esc চাপুন
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+                  <span className="bg-slate-800 text-amber-400 font-bold px-2.5 py-1 rounded-md text-[11px] border border-slate-700/60">
+                    ফুলস্ক্রিন ভিউয়ার
+                  </span>
+                </div>
               </div>
             </motion.div>
           </motion.div>
